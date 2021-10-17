@@ -1,15 +1,31 @@
 
 <p align="center">
-  <h1 align="center"> Roadman - Template  </h1>
+  <h1 align="center"> Roadman - Couchbase UserType Model + Firebase Auth </h1>
 </p>
 
 
-<div align="center">
+## An auth roadman using a UserType model in Couchbase and firebase-auth
 
-<img width="500px" src="./docs/starterpack.jpeg"></img>
+### How to use
+```
+yarn add @roadmanjs/auth
+```
 
+app.ts
+```ts
+import roadman from 'roadman';
+import {AuthResolvers} from '@roadmanjs/auth';
 
-</div>
+await roadman({
+  resolvers: [...AuthResolvers, ...MyOtherResolvers]
+});
+```
 
+also exports, middleswares like, isAuth, or FirebaseToken
 
-## Build your roadman packages with friends.
+#### Env required
+```sh
+FIREBASE_SA={"firebase admmin service account": ""}
+
+// Couchbase envs
+```
