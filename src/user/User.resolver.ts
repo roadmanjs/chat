@@ -1,5 +1,5 @@
-import {Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, ContextType, ResType} from 'couchset';
-import {UserType, UserModel, incrementRefreshToken} from './User.model';
+import {Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, ContextType} from 'couchset';
+import {UserType, UserModel, incrementRefreshToken, ResType} from './User.model';
 import {sendRefreshToken} from './auth';
 import {isAuth} from '../middlewares/isAuth';
 import isEmpty from 'lodash/isEmpty';
@@ -32,6 +32,7 @@ export class UserResolver {
     }
 
     @Mutation(() => ResType)
+    @UseMiddleware(isAuth)
     async revokeRefreshTokenForUser(@Arg('userId', () => String) userId: string): Promise<ResType> {
         try {
             const updated = await incrementRefreshToken(userId);
@@ -64,7 +65,7 @@ export class UserResolver {
 
                 await UserModel.updateById(userId, updatedUser);
 
-                return {success: true, data: updatedUser};
+                return {success: true};
             }
             throw new Error('error updateing user');
         } catch (err) {
@@ -73,6 +74,7 @@ export class UserResolver {
     }
 
     @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
     async logout(@Ctx() {res}: ContextType) {
         sendRefreshToken(res, '');
         return true;

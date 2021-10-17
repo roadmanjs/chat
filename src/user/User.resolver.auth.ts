@@ -12,9 +12,9 @@ export class UserAuthResolver {
     @Mutation(() => LoginResponseType)
     @UseMiddleware(FirebaseTokenVerify)
     async phoneLogin(
-        @Arg('phone') phone: string,
-        @Arg('firebaseToken') _firebaseToken: string,
-        @Arg('createNew') createNew: boolean,
+        @Arg('phone', () => String, {nullable: false}) phone: string,
+        @Arg('firebaseToken', () => String, {nullable: false}) _firebaseToken: string,
+        @Arg('createNew', () => Boolean, {nullable: true}) createNew: boolean,
         @Ctx() {res}: ContextType
     ): Promise<LoginResponseType> {
         try {

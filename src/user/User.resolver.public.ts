@@ -5,7 +5,9 @@ import {UserModel, userModelPublicSelectors, UserType} from './User.model';
 @Resolver()
 export class UserResolverPublic {
     @Query(() => UserType)
-    async getUser(@Arg('id') id: string): Promise<UserType | null> {
+    async getUser(
+        @Arg('id', () => String, {nullable: false}) id: string
+    ): Promise<UserType | null> {
         try {
             const username = id;
 

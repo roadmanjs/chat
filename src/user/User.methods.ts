@@ -46,7 +46,6 @@ export const createNewUser = async (args: UserType): Promise<LoginResponseType> 
 
         return {
             success: true,
-            data: createdUser,
             user: createdUser,
             refreshToken,
             accessToken,

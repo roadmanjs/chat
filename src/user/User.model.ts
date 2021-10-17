@@ -1,4 +1,4 @@
-import {Field, InputType, Model, ObjectType, ResType} from 'couchset';
+import {Field, InputType, Model, ObjectType} from 'couchset';
 
 import {isEmpty} from 'lodash';
 
@@ -85,7 +85,13 @@ export const userModelPublicSelectors = [
 ];
 
 @ObjectType()
-export class LoginResponseType extends ResType {
+export class LoginResponseType {
+    @Field(() => Boolean, {nullable: false})
+    success: boolean;
+
+    @Field(() => String, {nullable: true})
+    message?: string;
+
     @Field(() => String, {nullable: true})
     refreshToken: string;
 
@@ -94,6 +100,15 @@ export class LoginResponseType extends ResType {
 
     @Field(() => UserType, {nullable: true})
     user: UserType;
+}
+
+@ObjectType()
+export class ResType {
+    @Field(() => Boolean, {nullable: false})
+    success: boolean;
+
+    @Field(() => String, {nullable: true})
+    message?: string;
 }
 
 export const UserModel: Model = new Model(modelName);
