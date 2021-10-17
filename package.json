@@ -1,7 +1,7 @@
 {
     "name": "roadman-auth",
     "version": "0.0.0",
-    "description": "A Roadman for Auth using firebase and couchbase",
+    "description": " An auth roadman using a UserType model in Couchbase and firebase-auth",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
