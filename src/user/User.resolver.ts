@@ -1,14 +1,4 @@
-import {
-    Resolver,
-    Query,
-    Mutation,
-    Arg,
-    Ctx,
-    UseMiddleware,
-    ContextType,
-    ResType,
-    // Int,
-} from 'couchset';
+import {Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, ContextType, ResType} from 'couchset';
 import {UserType, UserModel, incrementRefreshToken} from './User.model';
 import {sendRefreshToken} from './auth';
 import {isAuth} from '../middlewares/isAuth';
