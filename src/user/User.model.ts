@@ -15,57 +15,57 @@ export class UserType {
     @Field(() => String, {nullable: true})
     email?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     username?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     fullname?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     firstname?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     lastname?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     phone?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     website?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     address?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     country?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     bio?: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     avatar?: string;
 
     // Wallet here
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     currency?: string;
 
-    @Field({nullable: true})
+    @Field(() => Number, {nullable: true})
     balance?: number;
 
-    @Field({nullable: true})
+    @Field(() => Boolean, {nullable: true})
     admin?: boolean;
 
     @Field(() => [String], {nullable: true})
     plans?: string[];
 
     // Revoke accessToken
-    @Field({nullable: true})
+    @Field(() => Number, {nullable: true})
     tokenVersion?: number;
 
-    @Field(() => String, {nullable: true})
+    @Field(() => Date, {nullable: true})
     createdAt?: Date;
 
-    @Field(() => String, {nullable: true})
+    @Field(() => Date, {nullable: true})
     updatedAt?: Date;
 }
 
@@ -86,13 +86,13 @@ export const userModelPublicSelectors = [
 
 @ObjectType()
 export class LoginResponseType extends ResType {
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     refreshToken: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     accessToken: string;
 
-    @Field({nullable: true})
+    @Field(() => UserType, {nullable: true})
     user: UserType;
 }
 
