@@ -283,10 +283,10 @@
     dotenv "^8.2.0"
     lodash "^4.17.20"
 
-"@roadmanjs/firebase-admin@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/firebase-admin/-/firebase-admin-0.0.2.tgz#b9a98285d467bbcea8c15fc6e98c93a8c7a1f32b"
-  integrity sha512-qqBcCLqmwVNcWI9PpaEFDCZbwMuR5tZeISduIdeV1zZSNFmRQfKNbsTBjFCk4PiZC1mdYstGogfLVO0P2RgnWg==
+"@roadmanjs/firebase-admin@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/firebase-admin/-/firebase-admin-0.0.3.tgz#ec59d48ee81fe2a062b8fa8c55035b8d7ef7fb31"
+  integrity sha512-QIZhuWYE7ch58MSVu+QO9ny+8nDaswP3s1FzviQcgoV7D6wYuYb7WPMS88lsaxApc4TRSDODNSPwJ5XhRXdQuA==
   dependencies:
     "@roadmanjs/core" "^0.0.3"
     chalk "^4.1.0"
