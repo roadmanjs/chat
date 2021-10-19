@@ -31,16 +31,20 @@ export class UserAuthResolver {
 
             log(`users found are users=${users.length}`);
 
-            // users are not found
-            if (isEmpty(users)) {
-                // should not create new user
-                // if (!createNew) {
-                //   throw new Error("could not find user");
-                // } else {
+            const firstUser = users || users[0];
+            if (!isEmpty(firstUser)) {
+                // user is found
+                const user = firstUser; // get first document
 
-                // }
-                // create a new user here
-                // else create new user from here
+                const response = await createLoginToken(user); // login user without password
+
+                const {refreshToken} = response;
+
+                sendRefreshToken(res, refreshToken);
+
+                return response;
+            } else {
+                // create new
                 const response = await createNewUser({
                     email: '',
                     fullname: '',
@@ -55,17 +59,6 @@ export class UserAuthResolver {
 
                 return response;
             }
-
-            // user is found
-            const user = users[0]; // get first document
-
-            const response = await createLoginToken(user); // login user without password
-
-            const {refreshToken} = response;
-
-            sendRefreshToken(res, refreshToken);
-
-            return response;
         } catch (error) {
             console.error(error);
             return {
