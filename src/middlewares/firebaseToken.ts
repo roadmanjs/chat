@@ -1,11 +1,13 @@
 import * as firebase from 'firebase-admin';
 
 import {MiddlewareFn} from 'couchset';
+import {configureFirebase} from '@roadmanjs/firebase-admin';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import {log} from '@roadmanjs/logs';
 
 export const FirebaseTokenVerify: MiddlewareFn = async ({args}: any, next) => {
+    await configureFirebase();
     const token = (args && args.firebaseToken) || get(args, 'user.firebaseToken', ''); // args.user.firebaseToken;
 
     if (isEmpty(token)) {

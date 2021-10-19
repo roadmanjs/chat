@@ -72,7 +72,7 @@
     },
     "dependencies": {
         "@roadmanjs/couchset": "^0.0.3",
-        "@roadmanjs/firebase-admin": "^0.0.3",
+        "@roadmanjs/firebase-admin": "^0.0.4",
         "@roadmanjs/logs": "^0.0.1",
         "jsonwebtoken": "^8.5.1"
     }
