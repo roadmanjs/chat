@@ -1,6 +1,6 @@
 {
     "name": "@roadmanjs/auth",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": " An auth roadman using a UserType model in Couchbase and firebase-auth",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
