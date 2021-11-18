@@ -1,0 +1,17 @@
+SELECT *
+FROM `dev` convo 
+   INNER NEST `dev` members
+   ON KEYS convo.members
+   INNER NEST `dev` owner
+   ON KEYS convo.owner
+WHERE convo._type = "ChatConvo"
+LIMIT 1;
+
+SELECT *
+FROM `dev` convo 
+   INNER NEST `dev` chatConvo
+   ON KEYS convo.chatConvoId
+   INNER NEST `dev` owner
+   ON KEYS convo.owner
+WHERE convo._type = "ChatConvoUser"
+LIMIT 1;

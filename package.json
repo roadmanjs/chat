@@ -71,9 +71,11 @@
         "typescript": ">=2.0"
     },
     "dependencies": {
-        "@roadmanjs/couchset": "^0.0.3",
+        "@roadmanjs/auth": "^0.0.4",
+        "@roadmanjs/couchset": "^0.0.4",
         "@roadmanjs/firebase-admin": "^0.0.4",
         "@roadmanjs/logs": "^0.0.1",
+        "@stoqey/client-graphql": "^1.1.12",
         "jsonwebtoken": "^8.5.1"
     }
 }

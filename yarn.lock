@@ -264,6 +264,16 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
+"@roadmanjs/auth@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.4.tgz#004c596195c30e6ec290a3e772a5ed31b4372900"
+  integrity sha512-xS3aa6W/1NrnkOd2QwVkO+zik8vBzv4ZDZGU2MbAeHxiVAuoxk/4UBHW4S9J3cz++ttR+/UDLMT5l+IhtAF7ZA==
+  dependencies:
+    "@roadmanjs/couchset" "^0.0.3"
+    "@roadmanjs/firebase-admin" "^0.0.4"
+    "@roadmanjs/logs" "^0.0.1"
+    jsonwebtoken "^8.5.1"
+
 "@roadmanjs/core@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@roadmanjs/core/-/core-0.0.3.tgz#c7f153efbf940e5fcb690f3689b2675be464a4df"
@@ -277,6 +287,19 @@
   integrity sha512-8sElQChFAn4mfmzAhT8owqOR1hrsyE2wdp4YYriWAtGmwXxIRrdzSeEFzJzgIorsY1Q2kDdWxQPaBDglVh32Kg==
   dependencies:
     "@roadmanjs/core" "^0.0.3"
+    chalk "^4.1.0"
+    couchset "^0.0.11"
+    debug "^4.3.1"
+    dotenv "^8.2.0"
+    lodash "^4.17.20"
+
+"@roadmanjs/couchset@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/couchset/-/couchset-0.0.4.tgz#0f7972bd9a84abf47340b4957da081343845a8d7"
+  integrity sha512-X1cQd8Azu5Y9+CzAlqO3b149UpfHVT5eDHCFh9zAd0IDwcYGB0S8wgnqvtYymwnJYbZXmISAK5UkoRvP9AsLiQ==
+  dependencies:
+    "@roadmanjs/core" "^0.0.3"
+    "@stoqey/client-graphql" "^1.1.12"
     chalk "^4.1.0"
     couchset "^0.0.11"
     debug "^4.3.1"
@@ -305,6 +328,14 @@
     debug "^4.3.1"
     dotenv "^8.2.0"
     lodash "^4.17.20"
+
+"@stoqey/client-graphql@^1.1.12":
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/@stoqey/client-graphql/-/client-graphql-1.1.12.tgz#bf9524bf6b8ef39cba37399d0bde32bb2456e6fa"
+  integrity sha512-e4e5sDz4Hifhy3P9ZHXUZ7cXsJnY0smU0ZGjcseigqbucltHIq6KOw5LCwL7qM6OpN2eANEBWFcC1viZ2MGlyA==
+  dependencies:
+    graphql "^15.4.0"
+    graphql-tag "^2.11.0"
 
 "@tootallnate/once@2":
   version "2.0.0"
@@ -1992,6 +2023,13 @@ graphql-subscriptions@^1.1.0:
   dependencies:
     iterall "^1.3.0"
 
+graphql-tag@^2.11.0:
+  version "2.12.6"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
+  integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
+  dependencies:
+    tslib "^2.1.0"
+
 graphql-tag@^2.12.5:
   version "2.12.5"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.5.tgz#5cff974a67b417747d05c8d9f5f3cb4495d0db8f"
@@ -2003,6 +2041,11 @@ graphql-type-json@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.3.2.tgz#f53a851dbfe07bd1c8157d24150064baab41e115"
   integrity sha512-J+vjof74oMlCWXSvt0DOf2APEdZOCdubEvGDUAlqH//VBYcOYsGgRW7Xzorr44LvkjiuvecWc8fChxuZZbChtg==
+
+graphql@^15.4.0:
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.7.2.tgz#85ab0eeb83722977151b3feb4d631b5f2ab287ef"
+  integrity sha512-AnnKk7hFQFmU/2I9YSQf3xw44ctnSFCfp3zE0N6W174gqe9fWG/2rKaKxROK7CcI3XtERpjEKFqts8o319Kf7A==
 
 graphql@^15.6.0:
   version "15.6.1"
