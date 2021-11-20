@@ -1,7 +1,7 @@
-import {Model} from 'couchset';
-import {UserType} from '../../user';
-import {ObjectType, Field, InputType} from 'type-graphql';
+import {Field, InputType, Model, ObjectType} from 'couchset';
+
 import {ChatMessageType} from './ChatMessage.model';
+import {UserType} from '../../user';
 
 export const ChatConvoModelName = 'ChatConvo';
 
@@ -61,7 +61,7 @@ export class ChatConvo {
     @Field(() => String, {nullable: true})
     avatar?: string;
 
-    @Field((type) => UserType, {nullable: true})
+    @Field(() => UserType, {nullable: true})
     owner: UserType;
 
     @Field(() => Date, {nullable: true})
@@ -76,10 +76,10 @@ export class ChatConvo {
     @Field({nullable: true})
     unread?: number;
 
-    @Field((type) => ChatMessageType, {nullable: true})
+    @Field(() => ChatMessageType, {nullable: true})
     lastMessage?: ChatMessageType;
 
-    @Field((type) => [UserType], {nullable: true})
+    @Field(() => [UserType], {nullable: true})
     members?: UserType[];
 }
 

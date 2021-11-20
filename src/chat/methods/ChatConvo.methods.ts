@@ -1,8 +1,7 @@
 import ChatConvoModel, { ChatConvo, ChatConvoModelName, ChatConvoType } from "../models/ChatConvo.model";
+import {connectionOptions, createUpdate} from "@roadmanjs/couchset";
 
 import { awaitTo } from "@stoqey/client-graphql";
-import connectionOptions from "@roadmanjs/couchset";
-import { createUpdate } from "../../shared";
 import isEmpty from "lodash/isEmpty";
 import { log } from "@roadmanjs/logs";
 
@@ -124,7 +123,7 @@ export const getChatConvoById = async (id: string): Promise<ChatConvo | null> =>
       throw errorFetching;
     }
 
-    const [rows = [], options = { hasNext: false, params: copyParams }] =
+    const [rows = []] =
       data;
 
     const dataToSend = rows.map((d) => {

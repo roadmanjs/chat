@@ -1,5 +1,4 @@
-import {Model} from 'couchset';
-import {ObjectType, Field, InputType} from 'type-graphql';
+import {Field, InputType, Model, ObjectType} from 'couchset';
 
 export const ChatAttachmentModelName = 'ChatAttachment';
 

@@ -1,7 +1,7 @@
-import {Model} from 'couchset';
-import {UserType} from '../../user';
-import {ObjectType, Field, InputType} from 'type-graphql';
+import {Field, InputType, Model, ObjectType} from 'couchset';
+
 import {ChatAttachmentType} from './ChatAttachment.model';
+import {UserType} from '../../user';
 
 export const ChatMessageModelName = 'ChatMessage';
 
@@ -44,7 +44,7 @@ export class ChatMessage {
     @Field(() => String, {nullable: true})
     id: string;
 
-    @Field((type) => UserType, {nullable: true})
+    @Field(() => UserType, {nullable: true})
     owner: UserType;
 
     @Field(() => Date, {nullable: true})
@@ -59,7 +59,7 @@ export class ChatMessage {
     @Field({nullable: true})
     convoId?: string;
 
-    @Field((type) => [ChatAttachmentType], {nullable: true})
+    @Field(() => [ChatAttachmentType], {nullable: true})
     attachments?: ChatAttachmentType[];
 
     @Field({nullable: true})

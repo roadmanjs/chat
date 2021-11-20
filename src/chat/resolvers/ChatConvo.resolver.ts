@@ -5,18 +5,15 @@ import {
     Query,
     Subscription,
     Root,
-    Args,
     UseMiddleware,
 } from 'type-graphql';
-import {awaitTo, ResType} from '@stoqey/client-graphql';
-import {withFilter} from 'graphql-subscriptions';
-import {createUpdate, getPagination} from '@roadmanjs/couchset';
+import {awaitTo} from '@stoqey/client-graphql';
+import {getPagination} from '@roadmanjs/couchset';
 import _get from 'lodash/get';
-import _, {identity, isEmpty, pickBy, startsWith} from 'lodash';
+import _, {identity, isEmpty, pickBy} from 'lodash';
 import ChatConvoModel, {
     ChatConvo,
     ChatConvoModelName,
-    chatConvoSelectors,
     ChatConvoType,
 } from '../models/ChatConvo.model';
 import {
@@ -25,8 +22,9 @@ import {
     getChatConvoById,
 } from '../methods/ChatConvo.methods';
 import {log} from '@roadmanjs/logs';
-import connectionOptions from '@roadmanjs/couchset';
+import {connectionOptions} from '@roadmanjs/couchset';
 import {isAuth} from '@roadmanjs/auth';
+import { ResType } from '../../shared/ContextType';
 
 const ConvoPagination = getPagination(ChatConvo);
 
@@ -39,7 +37,7 @@ export class ChatConvoResolver {
     })
     onChatConvo(
         @Root() data: {convoId: string; message: string},
-        @Arg('convoId') convoId: string
+        // @Arg('convoId') convoId: string
     ): String[] {
         return [data.message];
     }

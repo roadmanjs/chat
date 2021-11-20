@@ -9,11 +9,11 @@ import {configureFirebase} from '@roadmanjs/firebase-admin';
  * An auth roadman using a UserType model in Couchbase and firebase-auth
  * @param RoadmanBuild
  */
-export const authRoadman: RoadMan = async (args: RoadmanBuild): Promise<RoadmanBuild> => {
+export const chatRoadman: RoadMan = async (args: RoadmanBuild): Promise<RoadmanBuild> => {
     await configureFirebase();
     return args;
 };
 
 export const getAuthResolvers = () => [UserAuthResolver, UserResolverPublic, UserResolver];
 
-export default authRoadman;
+export default chatRoadman;

@@ -1,6 +1,5 @@
 import "mocha";
 
-import { ChatConvoType } from "../models/ChatConvo.model";
 import { createChatConvoType } from "./ChatConvo.methods";
 import { expect } from "chai";
 import { startCouchbase } from "@roadmanjs/couchset";

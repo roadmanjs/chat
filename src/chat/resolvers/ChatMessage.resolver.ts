@@ -4,13 +4,12 @@ import {
     Mutation,
     Arg,
     UseMiddleware,
-    ObjectType,
-    Field,
     Ctx,
+    getPagination,
     // Int,
-} from 'type-graphql';
+} from 'couchset';
 import {awaitTo} from '@stoqey/client-graphql';
-import {ContextType, createUpdate, getPagination, ResType} from '@roadmanjs/couchset';
+import {ContextType, ResType} from '../../shared/ContextType';
 import _get from 'lodash/get';
 import _, {identity, pickBy} from 'lodash';
 import {log} from '@roadmanjs/logs';
@@ -18,10 +17,9 @@ import {isAuth} from '../../middlewares';
 import ChatMessageModel, {
     ChatMessage,
     ChatMessageModelName,
-    chatMessageSelectors,
     ChatMessageType,
 } from '../models/ChatMessage.model';
-import {publishMessageToTopic} from '../../utils/pubsub.utils';
+import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
 import { connectionOptions } from '@roadmanjs/couchset';
 
