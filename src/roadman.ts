@@ -1,12 +1,12 @@
 import 'dotenv/config';
 
-import {ChatConvoResolver, ChatMessageResolver} from './chat';
+import {ChatConvoResolver, ChatMessageResolver} from './chat/resolvers';
 import {RoadMan, RoadmanBuild} from '@roadmanjs/core';
 
 import {configureFirebase} from '@roadmanjs/firebase-admin';
 
 /**
- * An auth roadman using a UserType model in Couchbase and firebase-auth
+ * A roadman for chat and groups, using UserType from 'auth'
  * @param RoadmanBuild
  */
 export const chatRoadman: RoadMan = async (args: RoadmanBuild): Promise<RoadmanBuild> => {
