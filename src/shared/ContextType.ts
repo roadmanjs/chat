@@ -1,13 +1,13 @@
 import {Request, Response} from 'express';
 
-import { RedisPubSub } from 'graphql-redis-subscriptions';
+import {RedisPubSub} from 'graphql-redis-subscriptions';
 
-export { ResType, GeoType } from 'couchset';
+export {ResType, GeoType} from 'couchset';
 
 export interface ContextType {
-    req: Request; 
+    req: Request;
     res: Response;
-    payload?: any; 
+    payload?: any;
     pubsub: RedisPubSub;
 }
 
@@ -15,13 +15,11 @@ export interface ContextType {
  * GraphQL Types start
  */
 
-
- /**
-  * ResType
-  */
-
+/**
+ * ResType
+ */
 
 export interface GeoLocationType {
-  lat: number;
-  lon: number;
+    lat: number;
+    lon: number;
 }

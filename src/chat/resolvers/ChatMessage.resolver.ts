@@ -10,8 +10,8 @@ import {
 } from 'couchset';
 import {awaitTo} from '@stoqey/client-graphql';
 import {ContextType, ResType} from '../../shared/ContextType';
-import _get from 'lodash/get';
-import _, {identity, pickBy} from 'lodash';
+import identity from 'lodash/identity';
+import pickBy from 'lodash/pickBy';
 import {log} from '@roadmanjs/logs';
 import {isAuth} from '../../middlewares';
 import ChatMessageModel, {
@@ -21,7 +21,7 @@ import ChatMessageModel, {
 } from '../models/ChatMessage.model';
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
-import { connectionOptions } from '@roadmanjs/couchset';
+import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 
 const ChatPagination = getPagination(ChatMessage);
 
@@ -117,7 +117,6 @@ export class ChatMessageResolver {
     ): Promise<ResType> {
         try {
             // If updating
-            // @ts-ignore
             const createdOrUpdate = await createUpdate<ChatMessageType>({
                 model: ChatMessageModel,
                 data: {

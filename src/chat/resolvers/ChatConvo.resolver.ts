@@ -1,16 +1,7 @@
-import {
-    Resolver,
-    Mutation,
-    Arg,
-    Query,
-    Subscription,
-    Root,
-    UseMiddleware,
-} from 'type-graphql';
+import {Resolver, Mutation, Arg, Query, Subscription, Root, UseMiddleware} from 'type-graphql';
 import {awaitTo} from '@stoqey/client-graphql';
-import {getPagination} from '@roadmanjs/couchset';
-import _get from 'lodash/get';
-import _, {identity, isEmpty, pickBy} from 'lodash';
+import {getPagination, connectionOptions} from '@roadmanjs/couchset';
+import {identity, isEmpty, pickBy} from 'lodash';
 import ChatConvoModel, {
     ChatConvo,
     ChatConvoModelName,
@@ -22,9 +13,8 @@ import {
     getChatConvoById,
 } from '../methods/ChatConvo.methods';
 import {log} from '@roadmanjs/logs';
-import {connectionOptions} from '@roadmanjs/couchset';
 import {isAuth} from '@roadmanjs/auth';
-import { ResType } from '../../shared/ContextType';
+import {ResType} from '../../shared/ContextType';
 
 const ConvoPagination = getPagination(ChatConvo);
 
@@ -36,7 +26,7 @@ export class ChatConvoResolver {
         filter: ({payload, args}) => args.convoId === payload.convoId,
     })
     onChatConvo(
-        @Root() data: {convoId: string; message: string},
+        @Root() data: {convoId: string; message: string}
         // @Arg('convoId') convoId: string
     ): String[] {
         return [data.message];
@@ -169,7 +159,7 @@ export class ChatConvoResolver {
     async startConvo(@Arg('args') args: ChatConvoType): Promise<ResType> {
         try {
             // If updating
-            const {members = [], group = false, owner} = args;
+            const {members = [], owner} = args;
 
             const limit = 1;
 
@@ -206,7 +196,7 @@ export class ChatConvoResolver {
                 throw errorGettingExisting;
             }
 
-            const [convos = [], pagination] = existingConvos;
+            const [convos = []] = existingConvos;
 
             if (!isEmpty(convos)) {
                 const dataToSend = convos.map((d: any) => {
