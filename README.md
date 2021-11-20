@@ -8,17 +8,17 @@
 
 ### How to use
 ```
-yarn add @roadmanjs/auth
+yarn add @roadmanjs/auth @roadmanjs/chat
 ```
 
 app.ts
 ```ts
 import roadman from 'roadman';
-import {AuthResolvers} from '@roadmanjs/auth';
-import {ChatResolvers} from '@roadmanjs/chat';
+import {getAuthResolvers} from '@roadmanjs/auth';
+import {getChatResolvers} from '@roadmanjs/chat';
 
 await roadman({
-  resolvers: [...AuthResolvers, ...ChatResolvers, ...MyOtherResolvers]
+  resolvers: [...getAuthResolvers(), ...getChatResolvers(), ...MyOtherResolvers]
 });
 ```
 

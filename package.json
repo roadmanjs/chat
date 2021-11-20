@@ -1,7 +1,7 @@
 {
-    "name": "@roadmanjs/auth",
+    "name": "@roadmanjs/chat",
     "version": "0.0.3",
-    "description": " An auth roadman using a UserType model in Couchbase and firebase-auth",
+    "description": " A roadman for chat and groups, using UserType from 'auth'",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
