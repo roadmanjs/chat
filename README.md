@@ -1,10 +1,10 @@
 
 <p align="center">
-  <h1 align="center"> Roadman - Couchbase UserType Model + Firebase Auth </h1>
+  <h1 align="center"> Roadman - for chat and groups </h1>
 </p>
 
 
-## An auth roadman using a UserType model in Couchbase and firebase-auth
+## A Roadman for chat and groups, using UserType from 'auth'
 
 ### How to use
 ```
@@ -15,20 +15,19 @@ app.ts
 ```ts
 import roadman from 'roadman';
 import {AuthResolvers} from '@roadmanjs/auth';
+import {ChatResolvers} from '@roadmanjs/chat';
 
 await roadman({
-  resolvers: [...AuthResolvers, ...MyOtherResolvers]
+  resolvers: [...AuthResolvers, ...ChatResolvers, ...MyOtherResolvers]
 });
 ```
-
-also exports, middleswares like, isAuth, or FirebaseToken
 
 #### Env required
 ```sh
 DEBUG=roadman*
 
-# Firebasebase service account json string
-FIREBASE_SA={"firebase admmin service account": ""}
+# Firebase service account json string
+FIREBASE_SA={"firebase admin service account": ""}
 
 # Couchbase envs
 COUCHBASE_URL= 
@@ -36,7 +35,7 @@ COUCHBASE_BUCKET=
 COUCHBASE_USERNAME= 
 COUCHBASE_PASSWORD= 
 
-# Access token generator secrets
+# Any random ass access token generator secrets
 ACCESS_TOKEN_SECRET=xxxxx
 REFRESH_TOKEN_SECRET=xxxx
 ```
