@@ -33,7 +33,7 @@ export class ChatConvoType {
     @Field(() => Date, {nullable: true})
     updatedAt?: Date;
 
-    @Field({nullable: true})
+    @Field(() => Boolean, {nullable: true})
     group?: boolean;
 
     @Field(() => Number, {nullable: true})
