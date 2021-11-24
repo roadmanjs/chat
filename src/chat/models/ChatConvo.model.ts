@@ -36,7 +36,7 @@ export class ChatConvoType {
     @Field({nullable: true})
     group?: boolean;
 
-    @Field({nullable: true})
+    @Field(() => Number, {nullable: true})
     unread?: number;
 
     @Field(() => String, {nullable: true})
@@ -70,10 +70,10 @@ export class ChatConvo {
     @Field(() => Date, {nullable: true})
     updatedAt?: Date;
 
-    @Field({nullable: true})
+    @Field(() => Boolean, {nullable: true})
     group?: boolean;
 
-    @Field({nullable: true})
+    @Field(() => Number, {nullable: true})
     unread?: number;
 
     @Field(() => ChatMessageType, {nullable: true})
