@@ -25,16 +25,16 @@ export class ChatMessageType {
     updatedAt?: Date;
     // Auto end
 
-    @Field({nullable: true})
+    @Field(() => Boolean, {nullable: true})
     system?: boolean;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     convoId?: string;
 
     @Field(() => String, {nullable: true})
     attachments?: string[];
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     message?: string;
 }
 
