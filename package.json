@@ -76,6 +76,8 @@
         "@roadmanjs/firebase-admin": "^0.0.4",
         "@roadmanjs/logs": "^0.0.1",
         "@stoqey/client-graphql": "^1.1.12",
-        "jsonwebtoken": "^8.5.1"
+        "jsonwebtoken": "^8.5.1",
+        "reflect-metadata": "^0.1.13",
+        "rxjs": "^7.4.0"
     }
 }

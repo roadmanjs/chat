@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'dotenv/config';
 
 import {ChatConvoResolver, ChatMessageResolver} from './chat/resolvers';
