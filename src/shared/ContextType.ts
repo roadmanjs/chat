@@ -46,7 +46,7 @@ export class ResType {
     message?: string;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Field((type) => [GraphQLJSON], {nullable: true})
+    @Field((type) => GraphQLJSON, {nullable: true})
     data?: any;
 }
 
@@ -59,9 +59,9 @@ export const getPagination = <T>(c: T): any => {
         @Field(() => Boolean, {nullable: true})
         hasNext?: boolean;
 
-        // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        // @Field((type) => GraphQLJSON, {nullable: true})
-        // params?: any;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        @Field((type) => GraphQLJSON, {nullable: true})
+        params?: any;
     }
     return Pagination;
 };

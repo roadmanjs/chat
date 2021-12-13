@@ -13,7 +13,8 @@
     "resolveJsonModule": false,
     "noImplicitAny": false, //TODO set to true once all data has types
     "target": "es2017",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["./src"]
 }

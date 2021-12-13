@@ -102,15 +102,6 @@ export class LoginResponseType {
     user: UserType;
 }
 
-@ObjectType()
-export class ResType {
-    @Field(() => Boolean, {nullable: false})
-    success: boolean;
-
-    @Field(() => String, {nullable: true})
-    message?: string;
-}
-
 export const UserModel: Model = new Model(modelName);
 
 /**

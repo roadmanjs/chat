@@ -1,5 +1,6 @@
 import {Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, ContextType} from 'couchset';
-import {UserType, UserModel, incrementRefreshToken, ResType} from './User.model';
+import {UserType, UserModel, incrementRefreshToken} from './User.model';
+import {ResType} from '../shared/ContextType';
 import {sendRefreshToken} from './auth';
 import {isAuth} from '../middlewares/isAuth';
 import isEmpty from 'lodash/isEmpty';
