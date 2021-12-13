@@ -5,7 +5,6 @@ import {
     Arg,
     UseMiddleware,
     Ctx,
-    getPagination,
     // Int,
 } from 'couchset';
 import {awaitTo} from '@stoqey/client-graphql';
@@ -22,6 +21,7 @@ import ChatMessageModel, {
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
+import { getPagination } from "../../shared/ContextType";
 
 const ChatPagination = getPagination(ChatMessage);
 

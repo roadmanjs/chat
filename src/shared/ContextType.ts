@@ -1,10 +1,11 @@
 import {Field, ObjectType} from 'couchset';
+// import { GraphQLObjectType, GraphQLScalarType } from "graphql"
 import {Request, Response} from 'express';
 
-// import { GraphQLJSONObject } from 'graphql-type-json';
+import GraphQLJSON from 'graphql-type-json';
 import {RedisPubSub} from 'graphql-redis-subscriptions';
 
-export {ResType, GeoType} from 'couchset';
+export {GeoType} from 'couchset';
 
 export interface ContextType {
     req: Request;
@@ -36,6 +37,19 @@ export interface GeoLocationType {
 //         }),
 //     });
 
+@ObjectType()
+export class ResType {
+    @Field(() => Boolean)
+    success: boolean;
+
+    @Field(() => String, {nullable: true})
+    message?: string;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Field((type) => [GraphQLJSON], {nullable: true})
+    data?: any;
+}
+
 export const getPagination = <T>(c: T): any => {
     @ObjectType(`${(c as any).name}Pagination`)
     class Pagination {
@@ -45,7 +59,8 @@ export const getPagination = <T>(c: T): any => {
         @Field(() => Boolean, {nullable: true})
         hasNext?: boolean;
 
-        // @Field(type => GraphQLJSONObject, {nullable: true})
+        // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // @Field((type) => GraphQLJSON, {nullable: true})
         // params?: any;
     }
     return Pagination;
