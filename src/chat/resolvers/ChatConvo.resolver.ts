@@ -1,6 +1,6 @@
 import {Resolver, Mutation, Arg, Query, Subscription, Root, UseMiddleware} from 'type-graphql';
 import {awaitTo} from '@stoqey/client-graphql';
-import {getPagination, connectionOptions} from '@roadmanjs/couchset';
+import {connectionOptions} from '@roadmanjs/couchset';
 import {identity, isEmpty, pickBy} from 'lodash';
 import ChatConvoModel, {
     ChatConvo,
@@ -14,7 +14,7 @@ import {
 } from '../methods/ChatConvo.methods';
 import {log} from '@roadmanjs/logs';
 import {isAuth} from '@roadmanjs/auth';
-import {ResType} from '../../shared/ContextType';
+import {ResType, getPagination} from '../../shared/ContextType';
 
 const ConvoPagination = getPagination(ChatConvo);
 
@@ -34,7 +34,9 @@ export class ChatConvoResolver {
 
     @Query(() => ChatConvo)
     @UseMiddleware(isAuth)
-    async chatConvoById(@Arg('id') id: string): Promise<ChatConvo | null> {
+    async chatConvoById(
+        @Arg('id', () => String, {nullable: true}) id: string
+    ): Promise<ChatConvo | null> {
         try {
             const chatConvo = await getChatConvoById(id);
 
@@ -52,10 +54,10 @@ export class ChatConvoResolver {
     @Query(() => ConvoPagination)
     @UseMiddleware(isAuth)
     async chatConvo(
-        @Arg('owner') owner: string,
-        @Arg('before', {nullable: true}) before: Date,
-        @Arg('after', {nullable: true}) after: Date,
-        @Arg('limit', {nullable: true}) limit = 10
+        @Arg('owner', () => String, {nullable: false}) owner: string,
+        @Arg('before', () => Date, {nullable: true}) before: Date,
+        @Arg('after', () => Date, {nullable: true}) after: Date,
+        @Arg('limit', () => Number, {nullable: true}) limit = 10
     ): Promise<{items: ChatConvo[]; hasNext: boolean; params: any}> {
         const copyParams = pickBy(
             {
@@ -123,7 +125,9 @@ export class ChatConvoResolver {
 
     @Mutation(() => ResType)
     @UseMiddleware(isAuth)
-    async createChatConvo(@Arg('args') args: ChatConvoType): Promise<ResType> {
+    async createChatConvo(
+        @Arg('args', () => ChatConvoType, {nullable: true}) args: ChatConvoType
+    ): Promise<ResType> {
         try {
             // If updating
             const {members = [], group = false, owner} = args;
@@ -156,7 +160,9 @@ export class ChatConvoResolver {
 
     @Mutation(() => ResType)
     @UseMiddleware(isAuth)
-    async startConvo(@Arg('args') args: ChatConvoType): Promise<ResType> {
+    async startConvo(
+        @Arg('args', () => ChatConvoType, {nullable: true}) args: ChatConvoType
+    ): Promise<ResType> {
         try {
             // If updating
             const {members = [], owner} = args;
