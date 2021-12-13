@@ -1,7 +1,7 @@
 import {Field, InputType, Model, ObjectType} from 'couchset';
 
 import {ChatAttachmentType} from './ChatAttachment.model';
-import {UserType} from '../../user';
+import {UserType} from '@roadmanjs/auth';
 
 export const ChatMessageModelName = 'ChatMessage';
 
