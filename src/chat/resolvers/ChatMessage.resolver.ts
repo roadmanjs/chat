@@ -30,10 +30,10 @@ export class ChatMessageResolver {
     @Query(() => ChatPagination)
     @UseMiddleware(isAuth)
     async chatMessage(
-        @Arg('convoId') convoId: string,
-        @Arg('before', {nullable: true}) before: Date,
-        @Arg('after', {nullable: true}) after: Date,
-        @Arg('limit', {nullable: true}) limit = 10
+        @Arg('convoId', () => String, {nullable: false}) convoId: string,
+        @Arg('before', () => Date, {nullable: true}) before: Date,
+        @Arg('after', () => Date, {nullable: true}) after: Date,
+        @Arg('limit', () => Number, {nullable: true}) limit = 10
     ): Promise<{
         items: ChatMessage[];
         hasNext: boolean;
@@ -113,7 +113,7 @@ export class ChatMessageResolver {
     @UseMiddleware(isAuth)
     async createChatMessage(
         @Ctx() ctx: ContextType,
-        @Arg('args') args: ChatMessageType
+        @Arg('args', () => ChatMessageType, {nullable: false}) args: ChatMessageType
     ): Promise<ResType> {
         try {
             // If updating
