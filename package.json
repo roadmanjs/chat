@@ -65,13 +65,14 @@
         "typescript": "^4.4.3"
     },
     "peerDependencies": {
+        "@roadmanjs/auth": ">=0.0.6",
         "@roadmanjs/couchset": ">=0.0.3",
         "@roadmanjs/firebase-admin": ">=0.0.3",
         "@roadmanjs/logs": ">=0.0.1",
         "typescript": ">=2.0"
     },
     "dependencies": {
-        "@roadmanjs/auth": "^0.0.5",
+        "@roadmanjs/auth": "^0.0.6",
         "@roadmanjs/couchset": "^0.0.4",
         "@roadmanjs/firebase-admin": "^0.0.4",
         "@roadmanjs/logs": "^0.0.1",
