@@ -8,7 +8,7 @@ import {
     // Int,
 } from 'couchset';
 import {awaitTo} from '@stoqey/client-graphql';
-import {ContextType, ResType} from '../../shared/ContextType';
+import {ContextType, ResType, getPagination} from '../../shared/ContextType';
 import identity from 'lodash/identity';
 import pickBy from 'lodash/pickBy';
 import {log} from '@roadmanjs/logs';
@@ -21,7 +21,6 @@ import ChatMessageModel, {
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
-import { getPagination } from "../../shared/ContextType";
 
 const ChatPagination = getPagination(ChatMessage);
 
