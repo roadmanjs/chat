@@ -25,7 +25,7 @@ export class ChatMessageType {
     updatedAt?: Date;
     // Auto end
 
-    @Field({nullable: true})
+    @Field(() => Boolean, {nullable: true})
     system?: boolean;
 
     @Field(() => String, {nullable: true})
@@ -53,7 +53,7 @@ export class ChatMessage {
     @Field(() => Date, {nullable: true})
     updatedAt?: Date;
 
-    @Field({nullable: true})
+    @Field(() => Boolean, {nullable: true})
     system?: boolean;
 
     @Field(() => String, {nullable: true})
