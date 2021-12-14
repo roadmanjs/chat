@@ -1,7 +1,7 @@
 import {Field, InputType, Model, ObjectType} from 'couchset';
 
 import {ChatAttachmentType} from './ChatAttachment.model';
-import {UserType} from '@roadmanjs/auth/dist/user/User.model.js';
+import {ChatUserType} from './ChatUser.model';
 
 export const ChatMessageModelName = 'ChatMessage';
 
@@ -44,8 +44,8 @@ export class ChatMessage {
     @Field(() => String, {nullable: true})
     id: string;
 
-    @Field(() => UserType, {nullable: true})
-    owner: UserType;
+    @Field(() => ChatUserType, {nullable: true})
+    owner: ChatUserType;
 
     @Field(() => Date, {nullable: true})
     createdAt?: Date;

@@ -1,7 +1,7 @@
 import {Field, InputType, Model, ObjectType} from 'couchset';
 
 import {ChatMessageType} from './ChatMessage.model';
-import {UserType} from '@roadmanjs/auth/dist/user/User.model.js';
+import {ChatUserType} from './ChatUser.model';
 
 export const ChatConvoModelName = 'ChatConvo';
 
@@ -61,8 +61,8 @@ export class ChatConvo {
     @Field(() => String, {nullable: true})
     avatar?: string;
 
-    @Field(() => UserType, {nullable: true})
-    owner: UserType;
+    @Field(() => ChatUserType, {nullable: true})
+    owner: ChatUserType;
 
     @Field(() => Date, {nullable: true})
     createdAt?: Date;
@@ -79,8 +79,8 @@ export class ChatConvo {
     @Field(() => ChatMessageType, {nullable: true})
     lastMessage?: ChatMessageType;
 
-    @Field(() => [UserType], {nullable: true})
-    members?: UserType[];
+    @Field(() => [ChatUserType], {nullable: true})
+    members?: ChatUserType[];
 }
 
 export const chatConvoSelectors = [
