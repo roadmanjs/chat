@@ -19,7 +19,7 @@ export interface ContextType {
  */
 
 /**
- * ResType
+ * ChatResType
  */
 
 export interface GeoLocationType {
@@ -38,7 +38,7 @@ export interface GeoLocationType {
 //     });
 
 @ObjectType()
-export class ResType {
+export class ChatResType {
     @Field(() => Boolean)
     success: boolean;
 

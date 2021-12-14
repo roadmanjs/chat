@@ -8,7 +8,7 @@ import {
     // Int,
 } from 'couchset';
 import {awaitTo} from '@stoqey/client-graphql';
-import {ContextType, ResType, getPagination} from '../../shared/ContextType';
+import {ContextType, ChatResType, getPagination} from '../../shared/ContextType';
 import identity from 'lodash/identity';
 import pickBy from 'lodash/pickBy';
 import {log} from '@roadmanjs/logs';
@@ -108,12 +108,12 @@ export class ChatMessageResolver {
         }
     }
 
-    @Mutation(() => ResType)
+    @Mutation(() => ChatResType)
     @UseMiddleware(isAuth)
     async createChatMessage(
         @Ctx() ctx: ContextType,
         @Arg('args', () => ChatMessageType, {nullable: false}) args: ChatMessageType
-    ): Promise<ResType> {
+    ): Promise<ChatResType> {
         try {
             // If updating
             const createdOrUpdate = await createUpdate<ChatMessageType>({

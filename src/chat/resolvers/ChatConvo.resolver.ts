@@ -14,7 +14,7 @@ import {
 } from '../methods/ChatConvo.methods';
 import {log} from '@roadmanjs/logs';
 import {isAuth} from '@roadmanjs/auth';
-import {ResType, getPagination} from '../../shared/ContextType';
+import {ChatResType, getPagination} from '../../shared/ContextType';
 
 const ConvoPagination = getPagination(ChatConvo);
 
@@ -123,11 +123,11 @@ export class ChatConvoResolver {
         }
     }
 
-    @Mutation(() => ResType)
+    @Mutation(() => ChatResType)
     @UseMiddleware(isAuth)
     async createChatConvo(
         @Arg('args', () => ChatConvoType, {nullable: true}) args: ChatConvoType
-    ): Promise<ResType> {
+    ): Promise<ChatResType> {
         try {
             // If updating
             const {members = [], group = false, owner} = args;
@@ -158,11 +158,11 @@ export class ChatConvoResolver {
         }
     }
 
-    @Mutation(() => ResType)
+    @Mutation(() => ChatResType)
     @UseMiddleware(isAuth)
     async startConvo(
         @Arg('args', () => ChatConvoType, {nullable: true}) args: ChatConvoType
-    ): Promise<ResType> {
+    ): Promise<ChatResType> {
         try {
             // If updating
             const {members = [], owner} = args;
