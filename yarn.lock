@@ -264,10 +264,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@roadmanjs/auth@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.6.tgz#f642f53e09e83fe0947901337015e9093d7323b5"
-  integrity sha512-gt41zFITypv+HdK4aldLZO1qRwmH52fG7xCRqrmrZL/I5fq5MvPGHRrm3wEYj4j/Ndnkm8nAT2pNlLq27iXIZw==
+"@roadmanjs/auth@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.7.tgz#ee31b57f444aa7d2dafaa00aa532da3f1b6d8a9d"
+  integrity sha512-xu9RnsHTgraXIXkm7kQQilhNeAr8X0GzrMSC2YLkhJSoYxkTKeBiVYRa4ij1+VEQgsteCl4wOTWuRzPBvwSlOQ==
   dependencies:
     "@roadmanjs/couchset" "^0.0.3"
     "@roadmanjs/firebase-admin" "^0.0.4"
