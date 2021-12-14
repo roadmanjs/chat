@@ -1,7 +1,7 @@
 import {Field, InputType, Model, ObjectType} from 'couchset';
 
 import {ChatMessageType} from './ChatMessage.model';
-import {UserType} from '@roadmanjs/auth';
+import {UserType} from '@roadmanjs/auth/dist/user/User.model.js';
 
 export const ChatConvoModelName = 'ChatConvo';
 
