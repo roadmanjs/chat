@@ -51,7 +51,7 @@ export class ChatMessageResolver {
         try {
             const bucket = connectionOptions.bucketName;
             const sign = before ? '<' : '>';
-            const time = before || after;
+            const time = new Date(before || after);
 
             const query = `
       SELECT *
