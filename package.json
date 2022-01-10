@@ -19,7 +19,7 @@
     "private": false,
     "scripts": {
         "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
-        "build": "rm -rf dist && ./node_modules/.bin/tsc --skipLibCheck && npm run client",
+        "build": "rm -rf dist && tsc --skipLibCheck && npm run client",
         "client": "node dist/scripts/copyClient.js",
         "test": "mocha src/*test.ts --exit",
         "eslint": "eslint ./src --fix --ext=ts"
