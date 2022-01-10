@@ -28,7 +28,7 @@ import {writeFileSync} from 'fs';
 
  */
 
-export const createClientPackage = async () => {
+(async () => {
     // Dirs
     shelljs.rm('-rf', 'dist-client');
     shelljs.mkdir('-p', 'dist-client');
@@ -61,6 +61,4 @@ export const createClientPackage = async () => {
     writeFileSync('dist-client/package.json', JSON.stringify(getPackageJsonFile), {
         encoding: 'utf8',
     });
-};
-
-createClientPackage();
+})();
