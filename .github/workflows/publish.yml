@@ -30,9 +30,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Install packages with yarn
+      # Install packages
       - name: "Install"
-        run: npm install & npm run build
+        run: npm install
+
+      # Build packages
+      - name: "Install"
+        run: npm run build   
 
       - name: npm publish dist-client
         run: |
