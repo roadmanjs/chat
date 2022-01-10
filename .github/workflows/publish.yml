@@ -34,14 +34,10 @@ jobs:
       - name: "Install"
         run: npm install
 
-      # Publish the client package
-      - name: Generate client dist-client
-        run: node dist/scripts/copyClient.js
-
       - name: npm publish dist-client
         run: |
           npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
-          npm publish dist-client --access=public
+          npm publish "dist-client/" --access=public
         env:
           CI: true
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

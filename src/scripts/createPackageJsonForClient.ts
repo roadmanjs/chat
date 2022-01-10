@@ -22,6 +22,7 @@ export const createClientPackageJson = async (): Promise<Object> => {
         },
         devDependencies: {}, // make it empty
         peerDependencies: {}, // make it empty
+        scripts: {}, // empty scripts
     };
 
     // console.log('new packageJson file', newPackage);
