@@ -1,4 +1,6 @@
+import {createClientPackageJson} from './createPackageJsonForClient';
 import shelljs from 'shelljs';
+import {writeFileSync} from 'fs';
 /**
  * TODO script to copy fragments, query, mutations, subscriptions into client output
  * - The copy some parts of package-json, like version number
@@ -41,7 +43,7 @@ export const createClientPackage = async () => {
 
     // package.json
     // TODO edit package.json to make it smaller with less deps
-    shelljs.cp('-rf', 'package.json', 'dist-client/package.json');
+    // shelljs.cp('-rf', 'package.json', 'dist-client/package.json');
 
     // frags, query, mutations, sub
     shelljs.cp('-rf', 'dist/chat/fragments', 'dist-client/dist/fragments');
@@ -53,6 +55,12 @@ export const createClientPackage = async () => {
     shelljs.cp('-rf', 'dist/chat/index-client.d.ts', 'dist-client/dist/index.d.ts');
     shelljs.cp('-rf', 'dist/chat/index-client.js', 'dist-client/dist/index.js');
     shelljs.cp('-rf', 'dist/chat/index-client.js.map', 'dist-client/dist/index.js.map');
+
+    const getPackageJsonFile = await createClientPackageJson();
+    console.log('string file', JSON.stringify(getPackageJsonFile));
+    writeFileSync('dist-client/package.json', JSON.stringify(getPackageJsonFile), {
+        encoding: 'utf8',
+    });
 };
 
 createClientPackage();

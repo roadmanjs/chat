@@ -17,6 +17,7 @@ service.account.json*
 node_modules/
 build/
 dist/
+dist-client/
 tmp/
 temp/
 keys/
