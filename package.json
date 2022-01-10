@@ -22,7 +22,6 @@
         "build": "rimraf dist && ./node_modules/.bin/tsc --skipLibCheck && npm run client",
         "client": "node dist/scripts/copyClient.js",
         "test": "mocha src/*test.ts --exit",
-        "prepublishOnly": "npm run build",
         "eslint": "eslint ./src --fix --ext=ts"
     },
     "lint-staged": {

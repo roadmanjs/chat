@@ -32,7 +32,7 @@ jobs:
 
       # Install packages with yarn
       - name: "Install"
-        run: npm install
+        run: npm install & npm run build
 
       - name: npm publish dist-client
         run: |
