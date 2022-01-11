@@ -35,8 +35,8 @@ export class ChatConvoResolver {
     @Query(() => ChatConvo)
     @UseMiddleware(isAuth)
     async chatConvoById(
-        @Arg('id', () => String, {nullable: true}) id: string
-    ): Promise<ChatConvo | null> {
+        @Arg('id', () => String, {nullable: false}) id: string
+    ): Promise<ChatConvo> {
         try {
             const chatConvo = await getChatConvoById(id);
 
