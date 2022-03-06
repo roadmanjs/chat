@@ -21,6 +21,7 @@ import ChatMessageModel, {
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
+import {updateConvoLastMessage} from '..';
 
 const ChatPagination = getPagination(ChatMessage);
 
@@ -123,12 +124,14 @@ export class ChatMessageResolver {
 
             // Error when creating message
             // update conversation with new lastMessage
+            // update message
 
             if (createdOrUpdate) {
                 const topicId = ChatConvo.name;
                 const message = createdOrUpdate.id;
                 const convoId = createdOrUpdate.convoId;
-                await publishMessageToTopic(ctx, topicId, {convoId, message});
+                await publishMessageToTopic(ctx, topicId, {convoId, message}); // update sockets
+                await updateConvoLastMessage(convoId, message); // update all convos
                 return {success: true, data: createdOrUpdate};
             }
 
