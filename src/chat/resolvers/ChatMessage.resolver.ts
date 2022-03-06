@@ -30,14 +30,22 @@ export class ChatMessageResolver {
     @UseMiddleware(isAuth)
     async chatMessage(
         @Arg('convoId', () => String, {nullable: false}) convoId: string,
+        //  @Arg('sort', () => String, {nullable: true}) sortArg?: string,
         @Arg('before', () => Date, {nullable: true}) before: Date,
         @Arg('after', () => Date, {nullable: true}) after: Date,
-        @Arg('limit', () => Number, {nullable: true}) limit = 10
+        @Arg('limit', () => Number, {nullable: true}) limitArg
     ): Promise<{
         items: ChatMessage[];
         hasNext: boolean;
         params: any;
     }> {
+        // TODO add sort, by default it's just new to old
+        const bucket = connectionOptions.bucketName;
+        const sign = before ? '<=' : '>=';
+        const time = new Date(before || after);
+        const limit = limitArg || 10;
+        const limitPassed = limit + 1;
+
         const copyParams = pickBy(
             {
                 convoId,
@@ -49,10 +57,6 @@ export class ChatMessageResolver {
         );
 
         try {
-            const bucket = connectionOptions.bucketName;
-            const sign = before ? '<' : '>';
-            const time = new Date(before || after);
-
             const query = `
       SELECT *
           FROM \`${bucket}\` chat
@@ -62,25 +66,12 @@ export class ChatMessageResolver {
           AND chat.convoId = "${convoId}"
           AND chat.createdAt ${sign} "${time.toISOString()}"
           ORDER BY chat.createdAt DESC
-          LIMIT ${limit};
+          LIMIT ${limitPassed};
       `;
-            // const query = `
-            // SELECT *
-            // FROM \`${bucket}\` chat
-            //   JOIN \`${bucket}\` owner
-            //   ON KEYS chat.owner
-            //   LEFT NEST \`${bucket}\` attachments
-            //   ON KEYS chat.attachments
-
-            //   WHERE chat._type = "${ChatMessageModelName}"
-            //   AND chat.convoId = "${convoId}"
-            //   AND chat.updatedAt ${sign} "${time}"
-            //   LIMIT ${limit};
-            // `;
 
             const [errorFetching, data = []] = await awaitTo(
                 ChatMessageModel.customQuery<any>({
-                    limit,
+                    limit: limitPassed,
                     query,
                     params: copyParams,
                 })
@@ -90,7 +81,13 @@ export class ChatMessageResolver {
                 throw errorFetching;
             }
 
-            const [rows = [], options = {hasNext: false, params: copyParams}] = data;
+            const [rows = []] = data;
+
+            const hasNext = rows.length > limit;
+
+            if (hasNext) {
+                rows.pop(); // remove last element
+            }
 
             const dataToSend = rows.map((d) => {
                 const {chat, attachments, owner} = d;
@@ -101,7 +98,7 @@ export class ChatMessageResolver {
                 });
             });
 
-            return {items: dataToSend, ...options};
+            return {items: dataToSend, params: copyParams, hasNext};
         } catch (error) {
             log('error getting chat messages', error);
             return {items: [], hasNext: false, params: copyParams};
