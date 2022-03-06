@@ -161,6 +161,7 @@ export const updateConvoLastMessage = async (
                             data: {
                                 ...convo,
                                 lastMessage: lastMessageId, // just this, it'll also add a updatedAt automatically
+                                unread: (convo.unread || 0) + 1, // increment unread too for all parties
                             },
                             ...convo,
                         })
