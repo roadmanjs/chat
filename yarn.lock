@@ -307,6 +307,18 @@
     dotenv "^8.2.0"
     lodash "^4.17.20"
 
+"@roadmanjs/couchset@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/couchset/-/couchset-0.0.7.tgz#b116670c7853ff2c9dd2900aac0ec5a589965f0f"
+  integrity sha512-oxFunCiG+nloz6FRyZCLsI4+WFPvlsIlyYEVtwYjBRXp0wrEg36bwPMU+bxLc7qXgDg6BULFzMtl2qGgdiktSA==
+  dependencies:
+    "@roadmanjs/core" "^0.0.3"
+    chalk "^4.1.0"
+    couchset "^0.0.15"
+    debug "^4.3.1"
+    dotenv "^8.2.0"
+    lodash "^4.17.20"
+
 "@roadmanjs/firebase-admin@^0.0.11":
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@roadmanjs/firebase-admin/-/firebase-admin-0.0.11.tgz#e34e47a4ea7843e53c259fdbf1041f528e154d43"
@@ -1174,6 +1186,24 @@ couchset@^0.0.14:
   version "0.0.14"
   resolved "https://registry.yarnpkg.com/couchset/-/couchset-0.0.14.tgz#2b22d42c21a3a6489a7a1ce159ede5996ab4471c"
   integrity sha512-7ZEpPEHp2lS/EaMTf/cDMgPx2lzdDbDZFrQg3d2MikUomjMN8iR226h/MDeQoU1QZfWmLyoE2BAbqQ3ZhuD4gw==
+  dependencies:
+    couchbase "^3.2.4"
+    debug "^4.3.1"
+    dotenv "^10.0.0"
+    graphql "^15.6.0"
+    graphql-redis-subscriptions "^2.4.0"
+    graphql-tag "^2.12.5"
+    graphql-type-json "^0.3.2"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.20"
+    ts-morph "^12.0.0"
+    type-graphql "^1.1.1"
+    uuid "^8.3.2"
+
+couchset@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/couchset/-/couchset-0.0.15.tgz#f899c0398fd1ce6175ad216c70ef13a22e94e224"
+  integrity sha512-edyADuPvVNNBRQYWhBMvQ4fwO3m5VovFufCq8WWSHIl1QyV8c2nRK8ceOADLA7ay989OqSR5bpsMaVKdXXlnTA==
   dependencies:
     couchbase "^3.2.4"
     debug "^4.3.1"

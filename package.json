@@ -67,13 +67,13 @@
         "typescript": "^4.4.3"
     },
     "peerDependencies": {
-        "@roadmanjs/couchset": ">=0.0.6",
+        "@roadmanjs/couchset": ">=0.0.7",
         "@roadmanjs/logs": ">=0.0.1",
         "typescript": ">=2.0"
     },
     "dependencies": {
         "@roadmanjs/auth": "^0.0.18",
-        "@roadmanjs/couchset": "^0.0.6",
+        "@roadmanjs/couchset": "^0.0.7",
         "@roadmanjs/firebase-admin": "^0.0.11",
         "@roadmanjs/logs": "^0.0.1",
         "@stoqey/client-graphql": "^1.1.12",
