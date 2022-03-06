@@ -2,6 +2,7 @@ import ChatConvoModel, {
     ChatConvo,
     ChatConvoModelName,
     ChatConvoType,
+    chatConvoSelectors,
 } from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 
@@ -135,5 +136,49 @@ export const getChatConvoById = async (id: string): Promise<ChatConvo | null> =>
     } catch (error) {
         log('error getting chat messages', error);
         return null;
+    }
+};
+
+export const updateConvoLastMessage = async (
+    convoId: string,
+    lastMessageId: string
+): Promise<boolean> => {
+    try {
+        // find all convo by convoId
+        // add update them all with the new lastMessageId
+
+        const convos: ChatConvoType[] = await ChatConvoModel.pagination({
+            select: chatConvoSelectors,
+            where: {convoId: {$eq: convoId}},
+        });
+
+        if (!isEmpty(convos)) {
+            const [errorConvos, updatedConvos] = await awaitTo(
+                Promise.all(
+                    convos.map((convo) =>
+                        createUpdate<ChatConvoType>({
+                            model: ChatConvoModel,
+                            data: {
+                                ...convo,
+                                lastMessage: lastMessageId, // just this, it'll also add a updatedAt automatically
+                            },
+                            ...convo,
+                        })
+                    )
+                )
+            );
+            if (errorConvos) {
+                throw errorConvos;
+            }
+
+            log(
+                `updated convos with lastMessage=${lastMessageId}`,
+                updatedConvos.map((uc) => uc.id)
+            );
+        }
+
+        return true;
+    } catch (error) {
+        return false;
     }
 };
