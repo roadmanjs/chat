@@ -1,7 +1,13 @@
 import gql from 'graphql-tag';
 
-export const ResTypeFragment = gql`
-    fragment ResTypeFragment on ResType {
+export interface ChatResType {
+    success: boolean;
+    message?: string;
+    data?: any;
+}
+
+export const ChatResTypeFragment = gql`
+    fragment ChatResTypeFragment on ChatResType {
         success
         message
         data
