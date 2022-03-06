@@ -55,10 +55,18 @@ export class ChatConvoResolver {
     @UseMiddleware(isAuth)
     async chatConvo(
         @Arg('owner', () => String, {nullable: false}) owner: string,
+        // @Arg('sort', () => String, {nullable: true}) sortArg?: string,
         @Arg('before', () => Date, {nullable: true}) before: Date,
         @Arg('after', () => Date, {nullable: true}) after: Date,
-        @Arg('limit', () => Number, {nullable: true}) limit = 10
+        @Arg('limit', () => Number, {nullable: true}) limitArg
     ): Promise<{items: ChatConvo[]; hasNext: boolean; params: any}> {
+        const bucket = connectionOptions.bucketName;
+        const sign = before ? '<=' : '>=';
+        // const sort = sortArg || 'DESC';
+        const time = new Date(before || after);
+        const limit = limitArg || 10;
+        const limitPassed = limit + 1;
+
         const copyParams = pickBy(
             {
                 owner,
@@ -70,11 +78,6 @@ export class ChatConvoResolver {
         );
 
         try {
-            const bucket = connectionOptions.bucketName;
-
-            const sign = before ? '<=' : '>=';
-            const time = new Date(before || after);
-
             const query = `
       SELECT *
       FROM \`${bucket}\` convo
@@ -89,7 +92,7 @@ export class ChatConvoResolver {
         AND convo.owner = "${owner}"
         AND convo.updatedAt ${sign} "${time.toISOString()}"
         ORDER BY convo.updatedAt DESC
-        LIMIT ${limit};
+        LIMIT ${limitPassed};
       `;
 
             const [errorFetching, data = []] = await awaitTo(
@@ -104,7 +107,13 @@ export class ChatConvoResolver {
                 throw errorFetching;
             }
 
-            const [rows = [], options = {hasNext: false, params: copyParams}] = data;
+            const [rows = []] = data;
+
+            const hasNext = rows.length > limit;
+
+            if (hasNext) {
+                rows.pop(); // remove last element
+            }
 
             const dataToSend = rows.map((d) => {
                 const {convo, lastMessage, members, owner} = d;
@@ -116,9 +125,9 @@ export class ChatConvoResolver {
                 });
             });
 
-            return {items: dataToSend, ...options};
+            return {items: dataToSend, params: copyParams, hasNext};
         } catch (error) {
-            log('error getting chat messages', error);
+            log('error getting chat convos', error);
             return {items: [], hasNext: false, params: copyParams};
         }
     }
