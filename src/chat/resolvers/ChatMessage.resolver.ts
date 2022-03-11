@@ -12,7 +12,7 @@ import {ContextType, ChatResType, getPagination} from '../../shared/ContextType'
 import identity from 'lodash/identity';
 import pickBy from 'lodash/pickBy';
 import {log} from '@roadmanjs/logs';
-import {isAuth} from '../../middlewares';
+import {isAuth} from '@roadmanjs/auth';
 import ChatMessageModel, {
     ChatMessage,
     ChatMessageModelName,
