@@ -256,15 +256,16 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@roadmanjs/auth@^0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.18.tgz#8f7df6ed4913b83460f76ff6e8e2ea266a7de968"
-  integrity sha512-zzP7WaYnE1ZLUJnJLxDSx7Xkig32jS9N4rqFf1CAKhxzXHTN5Sw8YvQFooUrMGguiS8zCng9XSH+Vxwioxmjkw==
+"@roadmanjs/auth@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.20.tgz#83924658e708d010ba66c84a6df2bb3923025a8d"
+  integrity sha512-t9LHtjVnpc726GjHgVtOpEOZqSoF+z4rr8RtEnQXSjQWCF6qXYrwFGtNzZPP2hZ0sCONSJjmChtEiqVm5z6New==
   dependencies:
     "@roadmanjs/couchset" "^0.0.3"
     "@roadmanjs/firebase-admin" "^0.0.4"
     "@roadmanjs/logs" "^0.0.1"
     "@roadmanjs/utils" "^0.0.4"
+    graphql-redis-subscriptions "^2.4.2"
     jsonwebtoken "^8.5.1"
 
 "@roadmanjs/core@^0.0.3":
@@ -2101,7 +2102,7 @@ graphql-query-complexity@^0.7.0:
   dependencies:
     lodash.get "^4.4.2"
 
-graphql-redis-subscriptions@^2.4.0:
+graphql-redis-subscriptions@^2.4.0, graphql-redis-subscriptions@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/graphql-redis-subscriptions/-/graphql-redis-subscriptions-2.4.2.tgz#338e77bd180cc5bfc810699ff5f0f5fdc380f90d"
   integrity sha512-zMd1G6uZcEvqHZ6PsQ63BfRtw5Bg4cccql1pfkEQsj1vXVWe4p+o8DqNfd9DDUFXIqhHpqkSeN/49BlIwud4Ag==

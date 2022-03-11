@@ -73,7 +73,7 @@
         "typescript": ">=2.0"
     },
     "dependencies": {
-        "@roadmanjs/auth": "^0.0.18",
+        "@roadmanjs/auth": "^0.0.20",
         "@roadmanjs/couchset": "^0.0.7",
         "@roadmanjs/firebase-admin": "^0.0.12",
         "@roadmanjs/logs": "^0.0.1",
