@@ -193,8 +193,8 @@ export const removeUnreadCount = async (owner: string, convoId: string): Promise
 
         if (!isEmpty(convos)) {
             const convo = convos[0];
-            convo.unread = 0; // remove the unread
             if (convo.unread > 0) {
+                convo.unread = 0; // remove the unread
                 await ChatConvoModel.updateById(convo.id, convo, {silent: true}); // do not updatedAt
             }
         }

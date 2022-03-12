@@ -30,7 +30,7 @@ describe("ChatConvo", () => {
 
   it("Remove read count", async () => {
     const owner = "1c01d85f-b811-44b1-8a4f-bef8030bf265";
-    const convoId = "e9992706-e854-4aef-bb5f-5e09d4224bf4";
+    const convoId = "b613b7c5-5f73-4331-8703-3a1176728a31";
 
     const hasUpdateCount = await removeUnreadCount(owner, convoId);
     
