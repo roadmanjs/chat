@@ -72,10 +72,16 @@ export class ChatMessage {
 @ObjectType()
 export class OnChatMessage {
     @Field(() => String, {nullable: true})
+    convoId?: string;
+
+    @Field(() => String, {nullable: true})
     message?: string;
 
     @Field(() => String, {nullable: true})
     typing?: string; // userId
+
+    @Field(() => Date, {nullable: true})
+    time?: Date;
 }
 
 export const chatMessageSelectors = [

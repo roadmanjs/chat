@@ -14,6 +14,7 @@ import {ContextType, ChatResType, getPagination} from '../../shared/ContextType'
 import identity from 'lodash/identity';
 import pickBy from 'lodash/pickBy';
 import {log} from '@roadmanjs/logs';
+import _get from 'lodash/get';
 import {isAuth} from '@roadmanjs/auth';
 import ChatMessageModel, {
     ChatMessage,
@@ -36,6 +37,18 @@ export class ChatMessageResolver {
     })
     onChatMessage(@Root() data: OnChatMessage): OnChatMessage {
         return data;
+    }
+
+    @Query(() => Boolean)
+    @UseMiddleware(isAuth)
+    async chatTyping(
+        @Ctx() ctx: ContextType,
+        @Arg('convoId', () => String, {nullable: false}) convoId: string,
+        @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
+    ): Promise<boolean> {
+        const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
+        await publishMessageToTopic(ctx, ChatMessage.name, {typing: owner, convoId, time}); // send a typing subscription
+        return true;
     }
 
     @Query(() => ChatPagination)
