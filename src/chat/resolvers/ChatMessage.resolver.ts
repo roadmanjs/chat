@@ -26,6 +26,7 @@ import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 import {updateConvoLastMessage} from '..';
+import {removeUnreadCount} from '../methods';
 
 const ChatPagination = getPagination(ChatMessage);
 
@@ -58,6 +59,7 @@ export class ChatMessageResolver {
     @Query(() => ChatPagination)
     @UseMiddleware(isAuth)
     async chatMessage(
+        @Ctx() ctx: ContextType,
         @Arg('convoId', () => String, {nullable: false}) convoId: string,
         //  @Arg('sort', () => String, {nullable: true}) sortArg?: string,
         @Arg('before', () => Date, {nullable: true}) before: Date,
@@ -68,6 +70,7 @@ export class ChatMessageResolver {
         hasNext: boolean;
         params: any;
     }> {
+        const owner = _get(ctx, 'payload.userId', '');
         // TODO add sort, by default it's just new to old
         const bucket = connectionOptions.bucketName;
         const sign = before ? '<=' : '>=';
@@ -126,6 +129,9 @@ export class ChatMessageResolver {
                     owner: owner[0] || null,
                 });
             });
+
+            // TODO just add as a queue non-blocking queries
+            await removeUnreadCount(owner, convoId);
 
             return {items: dataToSend, params: copyParams, hasNext};
         } catch (error) {

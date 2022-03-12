@@ -1198,6 +1198,24 @@ couchset@^0.0.15:
     type-graphql "^1.1.1"
     uuid "^8.3.2"
 
+couchset@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/couchset/-/couchset-0.0.16.tgz#caf6465a71b2e355d0401cbb047f7dfc2c0cb3ec"
+  integrity sha512-+5jb1HIkJUSPRo4MdxWdER79g9V0SNFD3LC8//bK1dlMB8yPUQdecSQG/zwJHTiRE7qxzRD25DAQZJKomvaGUg==
+  dependencies:
+    couchbase "^3.2.4"
+    debug "^4.3.1"
+    dotenv "^10.0.0"
+    graphql "^15.6.0"
+    graphql-redis-subscriptions "^2.4.0"
+    graphql-tag "^2.12.5"
+    graphql-type-json "^0.3.2"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.20"
+    ts-morph "^12.0.0"
+    type-graphql "^1.1.1"
+    uuid "^8.3.2"
+
 create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"

@@ -69,7 +69,7 @@
     "peerDependencies": {
         "@roadmanjs/couchset": ">=0.0.7",
         "@roadmanjs/logs": ">=0.0.1",
-        "couchset": ">=0.0.15",
+        "couchset": ">=0.0.16",
         "typescript": ">=2.0"
     },
     "dependencies": {
@@ -78,7 +78,7 @@
         "@roadmanjs/firebase-admin": "^0.0.12",
         "@roadmanjs/logs": "^0.0.1",
         "@stoqey/client-graphql": "^1.1.12",
-        "couchset": "^0.0.15",
+        "couchset": "^0.0.16",
         "graphql-type-json": "^0.3.2",
         "jsonwebtoken": "^8.5.1",
         "reflect-metadata": "^0.1.13",
