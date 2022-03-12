@@ -184,17 +184,17 @@ export const updateConvoLastMessage = async (
     }
 };
 
-export const removeUnreadCount = async (owner: string, convoId: string): Promise<boolean> => {
+export const removeUnreadCount = async (owner: string, convoId: string): Promise<any> => {
     try {
         const convos: ChatConvoType[] = await ChatConvoModel.pagination({
             select: chatConvoSelectors,
-            where: {convoId: {$eq: convoId}, owner: {$eg: owner}},
-            limit: 1,
+            where: {convoId: {$eq: convoId}, owner: {$eq: owner}},
         });
+
         if (!isEmpty(convos)) {
             const convo = convos[0];
+            convo.unread = 0; // remove the unread
             if (convo.unread > 0) {
-                convo.unread = 0; // remove the unread
                 await ChatConvoModel.updateById(convo.id, convo, {silent: true}); // do not updatedAt
             }
         }

@@ -22,6 +22,7 @@
         "build": "rm -rf dist && tsc --skipLibCheck && npm run client",
         "client": "node dist/scripts/copyClient.js",
         "test": "mocha src/*test.ts --exit",
+        "test-convo": "mocha src/chat/methods/*test.ts --exit",
         "eslint": "eslint ./src --fix --ext=ts"
     },
     "lint-staged": {
@@ -67,14 +68,14 @@
         "typescript": "^4.4.3"
     },
     "peerDependencies": {
-        "@roadmanjs/couchset": ">=0.0.7",
+        "@roadmanjs/couchset": ">=0.0.8",
         "@roadmanjs/logs": ">=0.0.1",
         "couchset": ">=0.0.16",
         "typescript": ">=2.0"
     },
     "dependencies": {
         "@roadmanjs/auth": "^0.0.20",
-        "@roadmanjs/couchset": "^0.0.7",
+        "@roadmanjs/couchset": "^0.0.8",
         "@roadmanjs/firebase-admin": "^0.0.12",
         "@roadmanjs/logs": "^0.0.1",
         "@stoqey/client-graphql": "^1.1.12",
