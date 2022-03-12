@@ -35,8 +35,12 @@ export class ChatMessageResolver {
         topics: ChatMessage.name,
         filter: ({payload, args}) => args.convoId === payload.convoId,
     })
-    onChatMessage(@Root() data: OnChatMessage): OnChatMessage {
-        return data;
+    onChatMessage(
+        @Root() data: OnChatMessage,
+        @Arg('convoId', () => String, {nullable: false}) convoId: string,
+        @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
+    ): OnChatMessage {
+        return {convoId, time, ...data};
     }
 
     @Query(() => Boolean)
