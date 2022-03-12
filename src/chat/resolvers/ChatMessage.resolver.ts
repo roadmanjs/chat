@@ -151,6 +151,7 @@ export class ChatMessageResolver {
             // update message
 
             if (createdOrUpdate) {
+                // TODO update with new topic after test
                 const topicId = ChatConvo.name;
                 const message = createdOrUpdate.id;
                 const convoId = createdOrUpdate.convoId;
