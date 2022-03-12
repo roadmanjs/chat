@@ -5,6 +5,8 @@ import {
     Arg,
     UseMiddleware,
     Ctx,
+    Subscription,
+    Root,
     // Int,
 } from 'couchset';
 import {awaitTo} from '@stoqey/client-graphql';
@@ -17,6 +19,7 @@ import ChatMessageModel, {
     ChatMessage,
     ChatMessageModelName,
     ChatMessageType,
+    OnChatMessage,
 } from '../models/ChatMessage.model';
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {ChatConvo} from '../models/ChatConvo.model';
@@ -27,6 +30,14 @@ const ChatPagination = getPagination(ChatMessage);
 
 @Resolver()
 export class ChatMessageResolver {
+    @Subscription(() => OnChatMessage, {
+        topics: ChatMessage.name,
+        filter: ({payload, args}) => args.convoId === payload.convoId,
+    })
+    onChatMessage(@Root() data: OnChatMessage): OnChatMessage {
+        return data;
+    }
+
     @Query(() => ChatPagination)
     @UseMiddleware(isAuth)
     async chatMessage(

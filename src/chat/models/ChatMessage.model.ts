@@ -66,6 +66,18 @@ export class ChatMessage {
     message?: string;
 }
 
+/**
+ * When a new message or user is simply typing
+ */
+@ObjectType()
+export class OnChatMessage {
+    @Field(() => String, {nullable: true})
+    message?: string;
+
+    @Field(() => String, {nullable: true})
+    typing?: string; // userId
+}
+
 export const chatMessageSelectors = [
     'id',
     'owner',
