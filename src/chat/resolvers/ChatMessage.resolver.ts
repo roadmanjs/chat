@@ -32,8 +32,7 @@ const ChatPagination = getPagination(ChatMessage);
 export class ChatMessageResolver {
     @Subscription(() => OnChatMessage, {
         topics: ChatMessage.name,
-        filter: ({payload, args, context}) =>
-            args.convoId === payload.convoId && context.payload.userId === payload.owner,
+        filter: ({payload, args}) => args.convoId === payload.convoId,
     })
     @UseMiddleware(isAuth)
     onChatMessage(
@@ -43,6 +42,9 @@ export class ChatMessageResolver {
         @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
     ): OnChatMessage {
         const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
+        if (owner !== data.owner) {
+            return null; // this is not your data
+        }
         return {convoId, time, owner, ...data};
     }
 
