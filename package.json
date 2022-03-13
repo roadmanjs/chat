@@ -1,6 +1,6 @@
 {
     "name": "@roadmanjs/chat",
-    "version": "0.0.41",
+    "version": "0.0.42",
     "description": " A roadman for chat and groups, using UserType from 'auth'",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
