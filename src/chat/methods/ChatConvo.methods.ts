@@ -148,27 +148,31 @@ export const updateConvoLastMessage = async (
         // find all convo by convoId
         // add update them all with the new lastMessageId
 
-        const foundConvos: ChatConvoType[] = await ChatConvoModel.pagination({
+        const convos: ChatConvoType[] = await ChatConvoModel.pagination({
             select: chatConvoSelectors,
             where: {convoId: {$eq: convoId}},
         });
 
-        const convos = foundConvos.filter((convo) => convo.owner !== owner); // do not update the senders convo
-
         if (!isEmpty(convos)) {
             const [errorConvos, updatedConvos] = await awaitTo(
                 Promise.all(
-                    convos.map((convo) =>
-                        createUpdate<ChatConvoType>({
-                            model: ChatConvoModel,
-                            data: {
-                                ...convo,
-                                lastMessage: lastMessageId, // just this, it'll also add a updatedAt automatically
-                                unread: (convo.unread || 0) + 1, // increment unread too for all parties
-                            },
+                    convos.map((convo) => {
+                        const update = {
                             ...convo,
-                        })
-                    )
+                            lastMessage: lastMessageId,
+                        };
+
+                        if (convo.owner !== owner) {
+                            // if this is not creator, update unread
+                            update.unread = (convo.unread || 0) + 1;
+                        }
+
+                        return createUpdate<ChatConvoType>({
+                            model: ChatConvoModel,
+                            data: update,
+                            ...convo,
+                        });
+                    })
                 )
             );
             if (errorConvos) {
