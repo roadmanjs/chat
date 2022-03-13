@@ -30,21 +30,18 @@ const ChatPagination = getPagination(ChatMessage);
 
 @Resolver()
 export class ChatMessageResolver {
+    // TODO subscriptions and auth middleware
     @Subscription(() => OnChatMessage, {
         topics: ChatMessage.name,
-        filter: ({payload, args}) => args.convoId === payload.convoId,
+        filter: ({payload, args}) =>
+            args.convoId === payload.convoId && args.owner === payload.owner,
     })
-    @UseMiddleware(isAuth)
     onChatMessage(
-        @Ctx() ctx: ContextType,
         @Root() data: OnChatMessage,
+        @Arg('owner', () => String, {nullable: false}) owner: string,
         @Arg('convoId', () => String, {nullable: false}) convoId: string,
         @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
     ): OnChatMessage {
-        const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
-        if (owner !== data.owner) {
-            return null; // this is not your data
-        }
         return {convoId, time, owner, ...data};
     }
 
