@@ -146,6 +146,8 @@ export class ChatMessageResolver {
         @Ctx() ctx: ContextType,
         @Arg('args', () => ChatMessageType, {nullable: false}) args: ChatMessageType
     ): Promise<ChatResType> {
+        const owner = _get(ctx, 'payload.userId', '');
+
         try {
             // If updating
             const createdOrUpdate = await createUpdate<ChatMessageType>({
@@ -166,7 +168,7 @@ export class ChatMessageResolver {
                 const message = createdOrUpdate.id;
                 const convoId = createdOrUpdate.convoId;
                 await publishMessageToTopic(ctx, topicId, {convoId, message}); // update sockets
-                await updateConvoLastMessage(convoId, message); // update all convos
+                await updateConvoLastMessage(owner, convoId, message); // update all convos
                 return {success: true, data: createdOrUpdate};
             }
 

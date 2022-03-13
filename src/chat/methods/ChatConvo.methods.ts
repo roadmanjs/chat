@@ -140,6 +140,7 @@ export const getChatConvoById = async (id: string): Promise<ChatConvo | null> =>
 };
 
 export const updateConvoLastMessage = async (
+    owner: string,
     convoId: string,
     lastMessageId: string
 ): Promise<boolean> => {
@@ -147,10 +148,12 @@ export const updateConvoLastMessage = async (
         // find all convo by convoId
         // add update them all with the new lastMessageId
 
-        const convos: ChatConvoType[] = await ChatConvoModel.pagination({
+        const foundConvos: ChatConvoType[] = await ChatConvoModel.pagination({
             select: chatConvoSelectors,
             where: {convoId: {$eq: convoId}},
         });
+
+        const convos = foundConvos.filter((convo) => convo.owner !== owner); // do not update the senders convo
 
         if (!isEmpty(convos)) {
             const [errorConvos, updatedConvos] = await awaitTo(
