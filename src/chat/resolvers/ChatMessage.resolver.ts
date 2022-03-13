@@ -36,8 +36,8 @@ export class ChatMessageResolver {
     })
     @UseMiddleware(isAuth)
     onChatMessage(
-        @Root() data: OnChatMessage,
         @Ctx() ctx: ContextType,
+        @Root() data: OnChatMessage,
         @Arg('convoId', () => String, {nullable: false}) convoId: string,
         @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
     ): OnChatMessage {
