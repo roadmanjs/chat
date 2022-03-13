@@ -7,6 +7,7 @@ export const ON_CHAT_MESSAGE_SUBSCRIPTION = gql`
             typing
             message
             time
+            owner
         }
     }
 `;
