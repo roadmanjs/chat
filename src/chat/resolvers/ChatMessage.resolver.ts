@@ -23,7 +23,6 @@ import ChatMessageModel, {
     OnChatMessage,
 } from '../models/ChatMessage.model';
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
-import {ChatConvo} from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 import {updateConvoLastMessage} from '..';
 import {removeUnreadCount} from '../methods';
@@ -163,8 +162,7 @@ export class ChatMessageResolver {
             // update message
 
             if (createdOrUpdate) {
-                // TODO update with new topic after test
-                const topicId = ChatConvo.name;
+                const topicId = ChatMessage.name;
                 const message = createdOrUpdate.id;
                 const convoId = createdOrUpdate.convoId;
                 await publishMessageToTopic(ctx, topicId, {convoId, message}); // update sockets
