@@ -22,10 +22,9 @@ import ChatMessageModel, {
     ChatMessageType,
     OnChatMessage,
 } from '../models/ChatMessage.model';
-import {publishMessageToTopic} from '../../shared/pubsub.utils';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 import {updateConvoLastMessage} from '..';
-import {removeUnreadCount} from '../methods';
+import {removeUnreadCount, updateConvoSubscriptions} from '../methods';
 
 const ChatPagination = getPagination(ChatMessage);
 
@@ -33,14 +32,18 @@ const ChatPagination = getPagination(ChatMessage);
 export class ChatMessageResolver {
     @Subscription(() => OnChatMessage, {
         topics: ChatMessage.name,
-        filter: ({payload, args}) => args.convoId === payload.convoId,
+        filter: ({payload, args, context}) =>
+            args.convoId === payload.convoId && context.payload.userId === payload.owner,
     })
+    @UseMiddleware(isAuth)
     onChatMessage(
         @Root() data: OnChatMessage,
+        @Ctx() ctx: ContextType,
         @Arg('convoId', () => String, {nullable: false}) convoId: string,
         @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
     ): OnChatMessage {
-        return {convoId, time, ...data};
+        const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
+        return {convoId, time, owner, ...data};
     }
 
     @Query(() => Boolean)
@@ -51,7 +54,17 @@ export class ChatMessageResolver {
         @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
     ): Promise<boolean> {
         const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
-        await publishMessageToTopic(ctx, ChatMessage.name, {typing: owner, convoId, time}); // send a typing subscription
+
+        const topicId = ChatMessage.name;
+
+        await updateConvoSubscriptions({
+            topicId,
+            sender: owner,
+            convoId,
+            data: {typing: owner, time},
+            context: ctx,
+        }); // send a typing subscription
+
         return true;
     }
 
@@ -165,8 +178,21 @@ export class ChatMessageResolver {
                 const topicId = ChatMessage.name;
                 const message = createdOrUpdate.id;
                 const convoId = createdOrUpdate.convoId;
-                await publishMessageToTopic(ctx, topicId, {convoId, message}); // update sockets
-                await updateConvoLastMessage(owner, convoId, message); // update all convos
+
+                await updateConvoLastMessage({
+                    sender: owner,
+                    convoId,
+                    lastMessageId: message,
+                }); // update all convos
+
+                await updateConvoSubscriptions({
+                    topicId,
+                    sender: owner,
+                    convoId,
+                    data: {message},
+                    context: ctx,
+                });
+
                 return {success: true, data: createdOrUpdate};
             }
 

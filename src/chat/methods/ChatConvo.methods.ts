@@ -6,9 +6,11 @@ import ChatConvoModel, {
 } from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 
+import {ContextType} from '../../shared/ContextType';
 import {awaitTo} from '@stoqey/client-graphql';
 import isEmpty from 'lodash/isEmpty';
 import {log} from '@roadmanjs/logs';
+import {publishMessageToTopic} from '../../shared/pubsub.utils';
 
 export const createAConvoAndReturnIt = async (newConvo: ChatConvoType): Promise<ChatConvoType> => {
     const {members = [], group = false, owner, ...others} = newConvo;
@@ -139,11 +141,14 @@ export const getChatConvoById = async (id: string): Promise<ChatConvo | null> =>
     }
 };
 
-export const updateConvoLastMessage = async (
-    owner: string,
-    convoId: string,
-    lastMessageId: string
-): Promise<boolean> => {
+interface UpdateConvoLastMessage {
+    sender: string;
+    convoId: string;
+    lastMessageId: string;
+}
+
+export const updateConvoLastMessage = async (args: UpdateConvoLastMessage): Promise<boolean> => {
+    const {sender, convoId, lastMessageId} = args;
     try {
         // find all convo by convoId
         // add update them all with the new lastMessageId
@@ -154,6 +159,7 @@ export const updateConvoLastMessage = async (
         });
 
         if (!isEmpty(convos)) {
+            // update convo objects
             const [errorConvos, updatedConvos] = await awaitTo(
                 Promise.all(
                     convos.map((convo) => {
@@ -162,7 +168,7 @@ export const updateConvoLastMessage = async (
                             lastMessage: lastMessageId,
                         };
 
-                        if (convo.owner !== owner) {
+                        if (convo.owner !== sender) {
                             // if this is not creator, update unread
                             update.unread = (convo.unread || 0) + 1;
                         }
@@ -182,6 +188,56 @@ export const updateConvoLastMessage = async (
             log(
                 `updated convos with lastMessage=${lastMessageId}`,
                 updatedConvos.map((uc) => uc.id)
+            );
+        }
+
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
+interface UpdateConvoSubscriptions {
+    topicId: string;
+    context: ContextType;
+    sender: string;
+    convoId: string;
+    data: object;
+}
+
+/**
+ * Send data to convo expect the sender
+ * @param args
+ * @returns
+ */
+export const updateConvoSubscriptions = async (
+    args: UpdateConvoSubscriptions
+): Promise<boolean> => {
+    const {topicId, context, sender, convoId, data} = args;
+    try {
+        const convos: ChatConvoType[] = await ChatConvoModel.pagination({
+            select: chatConvoSelectors,
+            where: {convoId: {$eq: convoId}, owner: {$neq: sender}},
+        });
+
+        if (!isEmpty(convos)) {
+            // update sockets, no need for results
+            await awaitTo(
+                Promise.all(
+                    convos.map((convo) => {
+                        // Send subscriptions to owners
+                        return publishMessageToTopic(context, topicId, {
+                            convoId,
+                            owner: convo.owner,
+                            ...data,
+                        }); // update sockets
+                    })
+                )
+            );
+
+            log(
+                `updated subscriptions from=${sender} with data=${data}`,
+                convos.map((uc) => uc.id)
             );
         }
 

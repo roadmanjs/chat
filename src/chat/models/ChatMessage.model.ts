@@ -72,6 +72,9 @@ export class ChatMessage {
 @ObjectType()
 export class OnChatMessage {
     @Field(() => String, {nullable: true})
+    owner?: string; // where this message should go to
+
+    @Field(() => String, {nullable: true})
     convoId?: string;
 
     @Field(() => String, {nullable: true})
