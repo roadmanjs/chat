@@ -8,7 +8,6 @@ import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 
 import {ChatMessage} from '../models';
 import {ContextType} from '../../shared/ContextType';
-import {UserType} from '@roadmanjs/auth';
 import {awaitTo} from '@stoqey/client-graphql';
 import isEmpty from 'lodash/isEmpty';
 import {log} from '@roadmanjs/logs';
@@ -216,7 +215,7 @@ export const updateConvoSubscriptions = async (
 ): Promise<boolean> => {
     const {context, sender, convoId, data} = args;
 
-    const topics = [ChatMessage.name, UserType.name];
+    const topics = [ChatMessage.name, ChatConvo.name];
 
     try {
         const convos: ChatConvoType[] = await ChatConvoModel.pagination({

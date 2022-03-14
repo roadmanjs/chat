@@ -13,7 +13,7 @@ import {
     getChatConvoById,
 } from '../methods/ChatConvo.methods';
 import {log} from '@roadmanjs/logs';
-import {isAuth, UserType} from '@roadmanjs/auth';
+import {isAuth} from '@roadmanjs/auth';
 import {ChatResType, getPagination} from '../../shared/ContextType';
 import {OnChatMessage} from '../models';
 
@@ -23,7 +23,7 @@ const ConvoPagination = getPagination(ChatConvo);
 export class ChatConvoResolver {
     // TODO auth middleware
     @Subscription(() => OnChatMessage, {
-        topics: UserType.name,
+        topics: ChatConvo.name,
         filter: ({payload, args}) => args.owner === payload.owner,
     })
     onConvos(
