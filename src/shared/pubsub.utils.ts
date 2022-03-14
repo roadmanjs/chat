@@ -9,11 +9,20 @@ import {ContextType} from './ContextType';
  */
 export const publishMessageToTopic = async (
     ctx: ContextType,
-    topic: string,
+    topic: string | string[],
     data: any
 ): Promise<boolean> => {
     if (ctx && ctx.pubsub) {
-        await ctx.pubsub.publish(topic, data);
+        if (Array.isArray(topic)) {
+            await Promise.all(
+                topic.map((tpc) => {
+                    return ctx.pubsub.publish(tpc, data);
+                })
+            );
+        } else {
+            await ctx.pubsub.publish(topic, data);
+        }
+
         return true;
     }
     return false;

@@ -54,10 +54,7 @@ export class ChatMessageResolver {
     ): Promise<boolean> {
         const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
 
-        const topicId = ChatMessage.name;
-
         await updateConvoSubscriptions({
-            topicId,
             sender: owner,
             convoId,
             data: {typing: owner, time},
@@ -174,7 +171,6 @@ export class ChatMessageResolver {
             // update message
 
             if (createdOrUpdate) {
-                const topicId = ChatMessage.name;
                 const message = createdOrUpdate.id;
                 const convoId = createdOrUpdate.convoId;
 
@@ -185,7 +181,6 @@ export class ChatMessageResolver {
                 }); // update all convos
 
                 await updateConvoSubscriptions({
-                    topicId,
                     sender: owner,
                     convoId,
                     data: {message},

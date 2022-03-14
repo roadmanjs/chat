@@ -6,7 +6,9 @@ import ChatConvoModel, {
 } from '../models/ChatConvo.model';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 
+import {ChatMessage} from '../models';
 import {ContextType} from '../../shared/ContextType';
+import {UserType} from '@roadmanjs/auth';
 import {awaitTo} from '@stoqey/client-graphql';
 import isEmpty from 'lodash/isEmpty';
 import {log} from '@roadmanjs/logs';
@@ -198,7 +200,6 @@ export const updateConvoLastMessage = async (args: UpdateConvoLastMessage): Prom
 };
 
 interface UpdateConvoSubscriptions {
-    topicId: string;
     context: ContextType;
     sender: string;
     convoId: string;
@@ -213,7 +214,10 @@ interface UpdateConvoSubscriptions {
 export const updateConvoSubscriptions = async (
     args: UpdateConvoSubscriptions
 ): Promise<boolean> => {
-    const {topicId, context, sender, convoId, data} = args;
+    const {context, sender, convoId, data} = args;
+
+    const topics = [ChatMessage.name, UserType.name];
+
     try {
         const convos: ChatConvoType[] = await ChatConvoModel.pagination({
             select: chatConvoSelectors,
@@ -226,7 +230,7 @@ export const updateConvoSubscriptions = async (
                 Promise.all(
                     convos.map((convo) => {
                         // Send subscriptions to owners
-                        return publishMessageToTopic(context, topicId, {
+                        return publishMessageToTopic(context, topics, {
                             convoId,
                             owner: convo.owner,
                             ...data,

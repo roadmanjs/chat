@@ -13,23 +13,25 @@ import {
     getChatConvoById,
 } from '../methods/ChatConvo.methods';
 import {log} from '@roadmanjs/logs';
-import {isAuth} from '@roadmanjs/auth';
+import {isAuth, UserType} from '@roadmanjs/auth';
 import {ChatResType, getPagination} from '../../shared/ContextType';
+import {OnChatMessage} from '../models';
 
 const ConvoPagination = getPagination(ChatConvo);
 
 @Resolver()
 export class ChatConvoResolver {
-    // Only admins
-    @Subscription(() => [String], {
-        topics: ChatConvo.name, // or dynamic topic function
-        filter: ({payload, args}) => args.convoId === payload.convoId,
+    // TODO subscriptions and auth middleware
+    @Subscription(() => OnChatMessage, {
+        topics: UserType.name,
+        filter: ({payload, args}) => args.owner === payload.owner,
     })
-    onChatConvo(
-        @Root() data: {convoId: string; message: string}
-        // @Arg('convoId') convoId: string
-    ): String[] {
-        return [data.message];
+    onConvos(
+        @Root() data: OnChatMessage,
+        @Arg('owner', () => String, {nullable: false}) owner: string,
+        @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
+    ): OnChatMessage {
+        return {time, owner, ...data};
     }
 
     @Query(() => ChatConvo)
