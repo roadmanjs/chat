@@ -21,7 +21,7 @@ const ConvoPagination = getPagination(ChatConvo);
 
 @Resolver()
 export class ChatConvoResolver {
-    // TODO subscriptions and auth middleware
+    // TODO auth middleware
     @Subscription(() => OnChatMessage, {
         topics: UserType.name,
         filter: ({payload, args}) => args.owner === payload.owner,

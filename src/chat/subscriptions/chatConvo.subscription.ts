@@ -5,3 +5,15 @@ export const ON_CHAT_CONVO_SUBSCRIPTION = gql`
         data: onChatConvo(convoId: $convoId)
     }
 `;
+
+export const ON_CONVOS_SUBSCRIPTION = gql`
+    subscription OnConvos($owner: String!, $time: DateTime) {
+        data: onConvos(owner: $owner, time: $time) {
+            convoId
+            typing
+            message
+            time
+            owner
+        }
+    }
+`;
