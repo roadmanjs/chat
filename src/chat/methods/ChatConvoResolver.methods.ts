@@ -78,7 +78,6 @@ export const chatConvo = async (
             WHERE convo._type = "${ChatConvoModelName}"
             AND convo.owner = "${owner}"
             AND convo.updatedAt ${sign} "${time.toISOString()}"
-            AND convo.public = false
             ORDER BY convo.updatedAt DESC
             LIMIT ${limitPassed};
         `;
