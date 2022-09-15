@@ -50,25 +50,25 @@ export const getConvoOwnerNAuth = async (
             },
         });
 
-        if (convo.length) {
-            const selectedConvo = convo[0];
-            isPublic = selectedConvo.isPublic;
-
-            if (isPublic) {
-                return {owner: selectedConvo.owner, isPublic};
-            }
-
-            if (isEmpty(token)) {
-                log('token is empty', token);
-                throw new Error('not authorized');
-            }
-
-            // throw error if token is not valid
-            const payload: any = verifyAuthToken(token);
-            return {owner: payload.userId, isPublic};
+        if (!convo.length) {
+            throw new Error('conversation not found');
         }
 
-        throw new Error('conversation not found');
+        const selectedConvo = convo[0];
+        isPublic = selectedConvo.isPublic;
+
+        if (isPublic) {
+            return {owner: selectedConvo.owner, isPublic};
+        }
+
+        if (isEmpty(token)) {
+            log('token is empty', token);
+            throw new Error('not authorized');
+        }
+
+        // throw error if token is not valid
+        const payload: any = verifyAuthToken(token);
+        return {owner: payload.userId, isPublic};
     } catch (e) {
         console.error(e);
         throw e;
