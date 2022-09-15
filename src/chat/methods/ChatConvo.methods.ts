@@ -63,7 +63,7 @@ export const createChatConvoType = async (
             where: {convoId: defaultConvo.convoId},
         });
 
-        if (existingPublicChat.length) {
+        if (existingPublicChat && existingPublicChat.length) {
             return existingPublicChat;
         }
     }
