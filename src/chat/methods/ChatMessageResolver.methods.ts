@@ -55,7 +55,7 @@ export const getConvoOwnerNAuth = async (
         }
 
         const selectedConvo = convo[0];
-        isPublic = selectedConvo.isPublic;
+        isPublic = selectedConvo.public || false;
 
         if (isPublic) {
             return {owner: selectedConvo.owner, isPublic};

@@ -4,6 +4,7 @@ import 'mocha';
 import {createChatConvoType, removeUnreadCount} from './ChatConvo.methods';
 
 import {expect} from 'chai';
+import {getConvoOwnerNAuth} from './ChatMessageResolver.methods';
 import {startCouchbase} from '@roadmanjs/couchset';
 import {startPublicConvo} from './ChatConvoResolver.methods';
 
@@ -39,13 +40,47 @@ describe('ChatConvo', () => {
     //   expect(hasUpdateCount).to.be.true;
     // });
 
-    it('Start public ChatConvo', async () => {
-        const id = 'rtv-1';
+    // it('Start public ChatConvo', async () => {
+    //     const id = 'rtv-1';
 
-        const publicConvo = await startPublicConvo(id);
+    //     const publicConvo = await startPublicConvo(id);
 
-        console.log('Created', publicConvo);
+    //     console.log('Created', publicConvo);
 
-        expect(publicConvo.public).to.be.true;
+    //     expect(publicConvo.public).to.be.true;
+    // });
+
+    it('GetConvoOwnerNAuth public convo', async () => {
+        const convoId = 'isangostar';
+        const mockContext = {
+            req: {
+                headers: {
+                    authorization: '',
+                },
+            },
+        };
+
+        const publicMessages = await getConvoOwnerNAuth(convoId, mockContext);
+
+        console.log('publicMessages', publicMessages);
+
+        expect(publicMessages).not.to.be.empty;
     });
+
+    it('GetConvoOwnerNAuth private convo', async () => {
+      const convoId = 'e9992706-e854-4aef-bb5f-5e09d4224bf4';
+      const mockContext = {
+          req: {
+              headers: {
+                  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5OWJjNDNiYS0wMmFiLTQzOTQtYjQ4Yi00OWEzOWE5NTQ0M2MiLCJpYXQiOjE2NjMyMTc2MjMsImV4cCI6MTY2MzQ3NjgyM30.zvCJo95goSCemwhvSEXF5nd3jIDhMZTfVrn9jUeo1OA',
+              },
+          },
+      };
+
+      const publicMessages = await getConvoOwnerNAuth(convoId, mockContext);
+
+      console.log('publicMessages', publicMessages);
+
+      expect(publicMessages).not.to.be.empty;
+  });
 });
