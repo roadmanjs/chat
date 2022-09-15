@@ -56,6 +56,18 @@ export const createChatConvoType = async (
         owner: 'system',
     };
 
+    const isPublicChat = defaultConvo.public;
+
+    if (isPublicChat) {
+        const existingPublicChat = await ChatConvoModel.pagination({
+            where: {convoId: defaultConvo.convoId},
+        });
+
+        if (existingPublicChat.length) {
+            return existingPublicChat;
+        }
+    }
+
     const [errorSystemConvo, createdSystemConvo] = await awaitTo(
         createUpdate<ChatConvoType>({
             model: ChatConvoModel,
@@ -68,6 +80,11 @@ export const createChatConvoType = async (
         throw errorSystemConvo;
     }
 
+    if (isPublicChat) {
+        return [createdSystemConvo];
+    }
+
+    // create a convo for each member
     const [errorConvos, convos] = await awaitTo(
         Promise.all(
             members.map((member) =>
