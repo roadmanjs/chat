@@ -39,6 +39,7 @@ export const getConvoOwnerNAuth = async (
     ctx: any
 ): Promise<{owner: string; isPublic: boolean}> => {
     let isPublic = false;
+
     const authorization = _get(ctx, 'req.headers.authorization', '');
     const token = authorization.split(' ')[1];
 
@@ -57,6 +58,7 @@ export const getConvoOwnerNAuth = async (
         }
 
         if (isEmpty(token)) {
+            log('token is empty', token);
             throw new Error('not authorized');
         }
 
