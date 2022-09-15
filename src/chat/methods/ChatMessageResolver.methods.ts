@@ -52,7 +52,7 @@ export const getConvoOwnerNAuth = async (
         throw err;
     }
 
-    if (convo.length) {
+    if (convo && convo.length) {
         const selectedConvo = convo[0];
         isPublic = selectedConvo.isPublic;
 
