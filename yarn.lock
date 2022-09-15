@@ -256,13 +256,13 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@roadmanjs/auth@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.20.tgz#83924658e708d010ba66c84a6df2bb3923025a8d"
-  integrity sha512-t9LHtjVnpc726GjHgVtOpEOZqSoF+z4rr8RtEnQXSjQWCF6qXYrwFGtNzZPP2hZ0sCONSJjmChtEiqVm5z6New==
+"@roadmanjs/auth@^0.0.25":
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.25.tgz#0871d74a11d34cc13fd25c207118585fad602eed"
+  integrity sha512-9/mhLdso6kN159gjhzL+FzwV2LkaXdDHVbovaqDBJDp58b3cCRzyo8dW4r3g5ZX8W3ofIUgPDXkwuDEYY2EXMg==
   dependencies:
     "@roadmanjs/couchset" "^0.0.3"
-    "@roadmanjs/firebase-admin" "^0.0.4"
+    "@roadmanjs/firebase-admin" "^0.0.16"
     "@roadmanjs/logs" "^0.0.1"
     "@roadmanjs/utils" "^0.0.4"
     graphql-redis-subscriptions "^2.4.2"
@@ -329,17 +329,22 @@
     lodash "^4.17.20"
     uuid "^8.3.2"
 
-"@roadmanjs/firebase-admin@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/firebase-admin/-/firebase-admin-0.0.4.tgz#0c58dae0124e83f1ade6635b743150f6c4ca6cdc"
-  integrity sha512-n3wMsMJYGW19tfjGXg9ioThgkE+C1nUnr5U2oPm5ueUp4PePEo2SmcFISR5T1tp90pmi9/r8LHTHdb3fc+M/sQ==
+"@roadmanjs/firebase-admin@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/firebase-admin/-/firebase-admin-0.0.16.tgz#d967b23e6d77344f05b1aa12399a845da5a15f2f"
+  integrity sha512-Yfps8tU7e7W3PXPX1Qhu0eH2wuoMR5Yp48gJ1w7RqMPVg2I5Z47TpB/6RQakKnKZI7gwY7huMy/5g7t0675wpA==
   dependencies:
     "@roadmanjs/core" "^0.0.3"
+    "@roadmanjs/couchset" "^0.0.6"
+    "@roadmanjs/logs" "^0.0.1"
+    "@roadmanjs/utils" "^0.0.4"
     chalk "^4.1.0"
     debug "^4.3.1"
     dotenv "^8.2.0"
     firebase-admin "^10.0.0"
+    graphql-upload "^13.0.0"
     lodash "^4.17.20"
+    uuid "^8.3.2"
 
 "@roadmanjs/logs@^0.0.1":
   version "0.0.1"
