@@ -65,7 +65,7 @@ export const getConvoOwnerNAuth = async (
         }
 
         // throw error if token is not valid
-        const payload = verifyAuthToken(token);
+        const payload: any = verifyAuthToken(token);
         return {owner: payload.userId, isPublic};
     }
 
