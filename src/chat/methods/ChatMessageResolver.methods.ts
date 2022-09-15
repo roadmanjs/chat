@@ -42,15 +42,11 @@ export const getConvoOwnerNAuth = async (
     const authorization = _get(ctx, 'req.headers.authorization', '');
     const token = authorization.split(' ')[1];
 
-    const [err, convo] = await ChatConvoModel.pagination({
+    const convo = await ChatConvoModel.pagination({
         where: {
             convoId,
         },
     });
-
-    if (err) {
-        throw err;
-    }
 
     if (convo && convo.length) {
         const selectedConvo = convo[0];
