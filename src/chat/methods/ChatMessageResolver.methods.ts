@@ -40,34 +40,39 @@ export const getConvoOwnerNAuth = async (
 ): Promise<{owner: string; isPublic: boolean}> => {
     let isPublic = false;
 
-    const authorization = _get(ctx, 'req.headers.authorization', '');
-    const token = authorization.split(' ')[1];
+    try {
+        const authorization = _get(ctx, 'req.headers.authorization', '');
+        const token = authorization.split(' ')[1];
 
-    const convo = await ChatConvoModel.pagination({
-        where: {
-            convoId,
-        },
-    });
+        const convo = await ChatConvoModel.pagination({
+            where: {
+                convoId,
+            },
+        });
 
-    if (convo && convo.length) {
-        const selectedConvo = convo[0];
-        isPublic = selectedConvo.isPublic;
+        if (convo.length) {
+            const selectedConvo = convo[0];
+            isPublic = selectedConvo.isPublic;
 
-        if (isPublic) {
-            return {owner: selectedConvo.owner, isPublic};
+            if (isPublic) {
+                return {owner: selectedConvo.owner, isPublic};
+            }
+
+            if (isEmpty(token)) {
+                log('token is empty', token);
+                throw new Error('not authorized');
+            }
+
+            // throw error if token is not valid
+            const payload: any = verifyAuthToken(token);
+            return {owner: payload.userId, isPublic};
         }
 
-        if (isEmpty(token)) {
-            log('token is empty', token);
-            throw new Error('not authorized');
-        }
-
-        // throw error if token is not valid
-        const payload: any = verifyAuthToken(token);
-        return {owner: payload.userId, isPublic};
+        throw new Error('conversation not found');
+    } catch (e) {
+        console.error(e);
+        throw e;
     }
-
-    throw new Error('conversation not found');
 };
 
 interface ChatMessageArgs {
