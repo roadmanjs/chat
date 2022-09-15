@@ -1,40 +1,51 @@
-import "reflect-metadata";
-import "mocha";
+import 'reflect-metadata';
+import 'mocha';
 
-import { createChatConvoType, removeUnreadCount } from "./ChatConvo.methods";
+import {createChatConvoType, removeUnreadCount} from './ChatConvo.methods';
 
-import { expect } from "chai";
-import { startCouchbase } from "@roadmanjs/couchset";
+import {expect} from 'chai';
+import {startCouchbase} from '@roadmanjs/couchset';
+import {startPublicConvo} from './ChatConvoResolver.methods';
 
 before((done) => {
-  startCouchbase().then(() => done());
+    startCouchbase().then(() => done());
 });
 
-describe("ChatConvo", () => {
-  it("Create convo", async () => {
-    const owner = "1c01d85f-b811-44b1-8a4f-bef8030bf265";
-    const otherUser = "99bc43ba-02ab-4394-b48b-49a39a95443c";
-    const members = [owner, otherUser];
+describe('ChatConvo', () => {
+    // it("Create convo", async () => {
+    //   const owner = "1c01d85f-b811-44b1-8a4f-bef8030bf265";
+    //   const otherUser = "99bc43ba-02ab-4394-b48b-49a39a95443c";
+    //   const members = [owner, otherUser];
 
-    const chatConvo = {
-        members,
-        group: false,
+    //   const chatConvo = {
+    //       members,
+    //       group: false,
 
-    };
+    //   };
 
-    const createdConvo = await createChatConvoType(chatConvo);
-    
-    console.log("Created", createdConvo);
-    expect(createdConvo).to.not.be.empty;
-  });
+    //   const createdConvo = await createChatConvoType(chatConvo);
 
-  it("Remove read count", async () => {
-    const owner = "1c01d85f-b811-44b1-8a4f-bef8030bf265";
-    const convoId = "b613b7c5-5f73-4331-8703-3a1176728a31";
+    //   console.log("Created", createdConvo);
+    //   expect(createdConvo).to.not.be.empty;
+    // });
 
-    const hasUpdateCount = await removeUnreadCount(owner, convoId);
-    
-    console.log("Created", hasUpdateCount);
-    expect(hasUpdateCount).to.be.true;
-  });
+    // it("Remove read count", async () => {
+    //   const owner = "1c01d85f-b811-44b1-8a4f-bef8030bf265";
+    //   const convoId = "b613b7c5-5f73-4331-8703-3a1176728a31";
+
+    //   const hasUpdateCount = await removeUnreadCount(owner, convoId);
+
+    //   console.log("Created", hasUpdateCount);
+    //   expect(hasUpdateCount).to.be.true;
+    // });
+
+    it('Start public ChatConvo', async () => {
+        const id = 'rtv-1';
+
+        const publicConvo = await startPublicConvo(id);
+
+        console.log('Created', publicConvo);
+
+        expect(publicConvo.public).to.be.true;
+    });
 });
