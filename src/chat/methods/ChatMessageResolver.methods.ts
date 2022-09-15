@@ -46,7 +46,7 @@ export const getConvoOwnerNAuth = async (
 
         const convo = await ChatConvoModel.pagination({
             where: {
-                convoId,
+                $or: [{id: convoId}, {convoId}],
             },
         });
 

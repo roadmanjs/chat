@@ -51,7 +51,7 @@ describe('ChatConvo', () => {
     // });
 
     it('GetConvoOwnerNAuth public convo', async () => {
-        const convoId = 'isangostar';
+        const convoId = 'e8e15949-311e-4954-8701-3fe46cc21b98';
         const mockContext = {
             req: {
                 headers: {
