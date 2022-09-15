@@ -14,6 +14,7 @@ export const ChatConvoFragment = gql`
         createdAt
         updatedAt
         group
+        public
         unread
         lastMessage {
             ...ChatMessageTypeFragment

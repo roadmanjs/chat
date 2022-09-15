@@ -34,6 +34,9 @@ export class ChatConvoType {
     updatedAt?: Date;
 
     @Field(() => Boolean, {nullable: true})
+    public?: boolean;
+
+    @Field(() => Boolean, {nullable: true})
     group?: boolean;
 
     @Field(() => Number, {nullable: true})
@@ -71,6 +74,9 @@ export class ChatConvo {
     updatedAt?: Date;
 
     @Field(() => Boolean, {nullable: true})
+    public?: boolean;
+
+    @Field(() => Boolean, {nullable: true})
     group?: boolean;
 
     @Field(() => Number, {nullable: true})
@@ -91,6 +97,7 @@ export const chatConvoSelectors = [
     'owner',
     'createdAt',
     'updatedAt',
+    'public',
     'group',
     'unread',
     'lastMessage',
