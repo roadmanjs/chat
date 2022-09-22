@@ -9,6 +9,7 @@ import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 import {ChatMessage} from '../models';
 import {ContextType} from '../../shared/ContextType';
 import {awaitTo} from '@stoqey/client-graphql';
+import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
 import {log} from '@roadmanjs/logs';
 import {publishMessageToTopic} from '../../shared/pubsub.utils';
@@ -232,21 +233,38 @@ export const updateConvoSubscriptions = async (
 ): Promise<boolean> => {
     const {context, sender, convoId, data} = args;
 
-    const topics = [ChatMessage.name, ChatConvo.name];
+    const publishToMessageTopic = async () => {
+        return publishMessageToTopic(context, [ChatMessage.name], {
+            convoId,
+            owner: sender,
+            ...data,
+        });
+    };
 
     try {
-        const convos: ChatConvoType[] = await ChatConvoModel.pagination({
+        // send to message topic
+        await publishToMessageTopic();
+
+        // send to convo topics
+        const membersConvos: ChatConvoType[] = await ChatConvoModel.pagination({
             select: chatConvoSelectors,
             where: {convoId: {$eq: convoId}, owner: {$neq: sender}},
         });
 
-        if (!isEmpty(convos)) {
+        if (!isEmpty(membersConvos)) {
+            const isPublicChat = compact(membersConvos.map((c) => c.public));
+
+            if (!isEmpty(isPublicChat)) {
+                log(`updated subscriptions isPublicChat`);
+                return;
+            }
+
             // update sockets, no need for results
             await awaitTo(
                 Promise.all(
-                    convos.map((convo) => {
+                    membersConvos.map((convo) => {
                         // Send subscriptions to owners
-                        return publishMessageToTopic(context, topics, {
+                        return publishMessageToTopic(context, [ChatConvo.name], {
                             convoId,
                             owner: convo.owner,
                             ...data,
@@ -257,8 +275,10 @@ export const updateConvoSubscriptions = async (
 
             log(
                 `updated subscriptions from=${sender} with data=${data}`,
-                convos.map((uc) => uc.id)
+                membersConvos.map((uc) => uc.id)
             );
+
+            // update sockets
         }
 
         return true;

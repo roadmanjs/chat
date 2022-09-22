@@ -15,7 +15,7 @@ import {awaitTo} from '@stoqey/client-graphql';
 import {connectionOptions} from '@roadmanjs/couchset';
 import {log} from '@roadmanjs/logs';
 
-export const chatConvoById = async (id: string): Promise<ChatConvo> => {
+export const chatConvoById = async (id: string): Promise<ChatConvo | null> => {
     try {
         const chatConvo = await getChatConvoById(id);
 
