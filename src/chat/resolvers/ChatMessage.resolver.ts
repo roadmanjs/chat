@@ -18,7 +18,7 @@ export class ChatMessageResolver {
         @Root() data: OnChatMessage,
         @Arg('owner', () => String, {nullable: true}) owner: string,
         @Arg('convoId', () => String, {nullable: false}) convoId: string,
-        @Arg('time', () => Date, {nullable: true}) time: Date // just to make the client HOT
+        @Arg('time', () => Date, {nullable: true}) time: Date
     ): OnChatMessage {
         return {convoId, time, owner, ...data};
     }
