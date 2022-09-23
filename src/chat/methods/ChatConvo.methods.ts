@@ -144,7 +144,7 @@ export const getChatConvoById = async (id: string): Promise<ChatConvo | null> =>
         const [rows = []] = data;
 
         const dataToSend = rows.map((d) => {
-            const {convo, lastMessage, members, owner} = d;
+            const {convo, lastMessage = {}, members, owner} = d;
             const lastMessageParsed = ChatMessageModel.parse(lastMessage);
             const chatConvoItem = ChatConvoModel.parse({
                 ...convo,
