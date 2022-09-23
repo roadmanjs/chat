@@ -4,9 +4,9 @@ import ChatConvoModel, {
     ChatConvoType,
     chatConvoSelectors,
 } from '../models/ChatConvo.model';
+import {ChatMessage, ChatMessageModel} from '../models';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
 
-import {ChatMessage} from '../models';
 import {ContextType} from '../../shared/ContextType';
 import {awaitTo} from '@stoqey/client-graphql';
 import compact from 'lodash/compact';
@@ -145,12 +145,14 @@ export const getChatConvoById = async (id: string): Promise<ChatConvo | null> =>
 
         const dataToSend = rows.map((d) => {
             const {convo, lastMessage, members, owner} = d;
-            return ChatConvoModel.parse({
+            const lastMessageParsed = ChatMessageModel.parse(lastMessage);
+            const chatConvoItem = ChatConvoModel.parse({
                 ...convo,
                 members,
-                lastMessage,
                 owner,
             });
+            chatConvoItem.lastMessage = lastMessageParsed;
+            return chatConvoItem;
         });
 
         return dataToSend[0];
