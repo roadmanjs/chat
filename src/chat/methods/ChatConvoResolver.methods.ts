@@ -10,6 +10,7 @@ import {
 } from '../methods/ChatConvo.methods';
 import {identity, isEmpty, pickBy} from 'lodash';
 
+import {ChatMessageModel} from '../models';
 import {ChatResType} from '../../shared/ContextType';
 import {awaitTo} from '@stoqey/client-graphql';
 import {connectionOptions} from '@roadmanjs/couchset';
@@ -104,12 +105,14 @@ export const chatConvo = async (
 
         const dataToSend = rows.map((d) => {
             const {convo, lastMessage, members, owner} = d;
-            return ChatConvoModel.parse({
+            const lastMessageParsed = ChatMessageModel.parse(lastMessage);
+            const chatConvoItem = ChatConvoModel.parse({
                 ...convo,
                 members,
-                lastMessage,
                 owner,
             });
+            chatConvoItem.lastMessage = lastMessageParsed;
+            return chatConvoItem;
         });
 
         return {items: dataToSend, params: copyParams, hasNext};
