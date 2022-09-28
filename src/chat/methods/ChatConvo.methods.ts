@@ -6,13 +6,13 @@ import ChatConvoModel, {
 } from '../models/ChatConvo.model';
 import {ChatMessage, ChatMessageModel} from '../models';
 import {connectionOptions, createUpdate} from '@roadmanjs/couchset';
+import {publishMessageToTopic, sendPushNotification} from '../../shared/pubsub.utils';
 
 import {ContextType} from '../../shared/ContextType';
 import {awaitTo} from '@stoqey/client-graphql';
 import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
 import {log} from '@roadmanjs/logs';
-import {publishMessageToTopic} from '../../shared/pubsub.utils';
 
 export const createAConvoAndReturnIt = async (newConvo: ChatConvoType): Promise<ChatConvoType> => {
     const {members = [], group = false, owner, ...others} = newConvo;
@@ -222,7 +222,7 @@ interface UpdateConvoSubscriptions {
     context: ContextType;
     sender: string;
     convoId: string;
-    data: object;
+    data: any;
 }
 
 /**
@@ -235,11 +235,19 @@ export const updateConvoSubscriptions = async (
 ): Promise<boolean> => {
     const {context, sender, convoId, data} = args;
 
+    const getSubscriptionData = () => {
+        if (data.id) {
+            // contains message payload
+            return {message: data.id};
+        }
+        return data;
+    };
+
     const publishToMessageTopic = async () => {
         return publishMessageToTopic(context, [ChatMessage.name], {
             convoId,
             owner: sender,
-            ...data,
+            ...getSubscriptionData(),
         });
     };
 
@@ -267,11 +275,19 @@ export const updateConvoSubscriptions = async (
             await awaitTo(
                 Promise.all(
                     membersConvos.map((convo) => {
+                        const pushmessage = {
+                            ...data,
+                            convoId,
+                            owner: convo.owner,
+                        };
+
+                        // unhandled promises
+                        sendPushNotification(sender, pushmessage);
                         // Send subscriptions to owners
                         return publishMessageToTopic(context, [ChatConvo.name], {
                             convoId,
                             owner: convo.owner,
-                            ...data,
+                            ...getSubscriptionData(),
                         }); // update sockets
                     })
                 )

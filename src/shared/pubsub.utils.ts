@@ -35,7 +35,7 @@ export const publishMessageToTopic = async (
 interface SendPushNotificationData extends Record<string, any> {
     message: string;
     owner: string;
-    convoId;
+    convoId: string;
 }
 
 export const sendPushNotification = async (

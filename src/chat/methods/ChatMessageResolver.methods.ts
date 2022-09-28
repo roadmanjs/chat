@@ -186,19 +186,19 @@ export const createChatMessage = async (
         // update message
 
         if (createdOrUpdate) {
-            const message = createdOrUpdate.id;
+            const messageId = createdOrUpdate.id;
             const convoId = createdOrUpdate.convoId;
 
             await updateConvoLastMessage({
                 sender: owner,
                 convoId,
-                lastMessageId: message,
+                lastMessageId: messageId,
             }); // update all convos
 
             await updateConvoSubscriptions({
                 sender: owner,
                 convoId,
-                data: {message},
+                data: {...createdOrUpdate},
                 context: ctx,
             });
 
