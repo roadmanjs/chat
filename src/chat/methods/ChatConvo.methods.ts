@@ -243,11 +243,13 @@ export const updateConvoSubscriptions = async (
         return data;
     };
 
+    const subscriptionData = getSubscriptionData();
+
     const publishToMessageTopic = async () => {
         return publishMessageToTopic(context, [ChatMessage.name], {
             convoId,
             owner: sender,
-            ...getSubscriptionData(),
+            ...subscriptionData,
         });
     };
 
@@ -282,12 +284,15 @@ export const updateConvoSubscriptions = async (
                         };
 
                         // unhandled promises
-                        sendPushNotification(sender, pushmessage);
+                        if (!subscriptionData.typing) {
+                            sendPushNotification(sender, pushmessage);
+                        }
+
                         // Send subscriptions to owners
                         return publishMessageToTopic(context, [ChatConvo.name], {
                             convoId,
                             owner: convo.owner,
-                            ...getSubscriptionData(),
+                            ...subscriptionData,
                         }); // update sockets
                     })
                 )
