@@ -41,7 +41,7 @@ interface SendPushNotificationData extends Record<string, any> {
 export const sendPushNotification = async (
     senderId: string,
     data: SendPushNotificationData
-): Promise<void> => {
+): Promise<any> => {
     try {
         const {owner, message} = data;
 
@@ -52,7 +52,7 @@ export const sendPushNotification = async (
 
             const fullnames = sender.fullname || sender.firstname + ' ' + sender.lastname;
 
-            await sendMessageToUser(owner, {
+            const sentMessage = await sendMessageToUser(owner, {
                 data: {
                     type: 'chat',
                     ...data,
@@ -63,6 +63,8 @@ export const sendPushNotification = async (
                     imageUrl: imageUrl,
                 },
             });
+
+            return sentMessage;
         }
     } catch (error) {
         log('error sending push notification', error);

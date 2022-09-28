@@ -454,14 +454,14 @@
     dotenv "^8.2.0"
     lodash "^4.17.20"
 
-"@roadmanjs/couchset@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/couchset/-/couchset-0.0.8.tgz#2a3ec55f08416880a33956e580093572c1f29db6"
-  integrity sha512-ZnIX9x83bVHZs0MNHJEwsDNECqLBTBHpVyLlWzyYmZRMiDeTNfAiI5zabfkTltEQ1J4cFr6GCtIQfxN5mk4kyQ==
+"@roadmanjs/couchset@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/couchset/-/couchset-0.0.9.tgz#a3712404d31d122eefdd7ff4cc98354aa4c2ccc3"
+  integrity sha512-FysDOXLzvlSCxooIxrjvICyqtf6Ke9JG5aQjlUwChh6TghkNPh9MborxgkAB/7MdYAq/O4O0tL6h5ezJ9a/PJw==
   dependencies:
     "@roadmanjs/core" "^0.0.3"
     chalk "^4.1.0"
-    couchset "^0.0.16"
+    couchset "^0.0.17"
     debug "^4.3.1"
     dotenv "^8.2.0"
     lodash "^4.17.20"
@@ -528,10 +528,10 @@
     dotenv "^8.2.0"
     lodash "^4.17.20"
 
-"@roadmanjs/push@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/push/-/push-0.0.1.tgz#705c92b760d1803f09012a93a1738544bb0fceab"
-  integrity sha512-kebCW+aadc+LI6u54Ty5NsoRjmLCLiy1105lwJYP9VmeQj4owH3W1fJ0CXEXwQp5ibC2+FtoEKuASuRU7N7Yig==
+"@roadmanjs/push@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/push/-/push-0.0.2.tgz#5066bdad9a35af2483ba09cfd767ec0e07e190d5"
+  integrity sha512-qD17DDCLE7AjRlMuSZjeCo/Ixzt4LnOCmFO/veCzBObP/RodOiWmAJvkdS5cv2AKdrox8lWEnNZtUxTcfa77iA==
   dependencies:
     "@roadmanjs/auth" "^0.0.27"
     "@roadmanjs/couchset" "^0.0.3"
@@ -1590,10 +1590,10 @@ couchset@^0.0.14:
     type-graphql "^1.1.1"
     uuid "^8.3.2"
 
-couchset@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/couchset/-/couchset-0.0.16.tgz#caf6465a71b2e355d0401cbb047f7dfc2c0cb3ec"
-  integrity sha512-+5jb1HIkJUSPRo4MdxWdER79g9V0SNFD3LC8//bK1dlMB8yPUQdecSQG/zwJHTiRE7qxzRD25DAQZJKomvaGUg==
+couchset@^0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/couchset/-/couchset-0.0.17.tgz#bfd72d327ecd7f464713aa285c552c1e8d3ac61e"
+  integrity sha512-U+z3a98hsz26inYb+SGvM0SD4ILVdFR9T2fRLA4XmsDJpxUO/Mv9WW0us44dB+paHXoPbA5qK+GBiLLCoixWvw==
   dependencies:
     couchbase "^3.2.4"
     debug "^4.3.1"
