@@ -125,7 +125,7 @@ export const getChatConvoById = async (id: string, owner: string): Promise<ChatC
             ON KEYS convo.lastMessage
                 
             WHERE convo._type = "${ChatConvoModelName}"
-            AND convo.id = "${id}"
+            AND (convo.id = "${id}" OR convo.convoId = "${id}")
             AND convo.owner = "${owner}"
             LIMIT 1;
             `;
