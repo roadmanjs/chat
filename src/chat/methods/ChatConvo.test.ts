@@ -1,13 +1,9 @@
 import 'reflect-metadata';
 import 'mocha';
 
-import {createChatConvoType, getChatConvoById, removeUnreadCount} from './ChatConvo.methods';
-import {startConvo, startPublicConvo} from './ChatConvoResolver.methods';
-
-import {ChatConvoType} from '../models';
 import {expect} from 'chai';
-import {getConvoOwnerNAuth} from './ChatMessageResolver.methods';
-import {group} from 'console';
+import {sendMessageToUser} from '@roadmanjs/push';
+import {sendPushNotification} from '../../shared/pubsub.utils';
 import {startCouchbase} from '@roadmanjs/couchset';
 
 before((done) => {
@@ -15,25 +11,38 @@ before((done) => {
 });
 
 describe('ChatConvo', () => {
-    it('it should create an new convo and return it', async () => {
-        const newConvo: ChatConvoType = {
-            owner: '1c01d85f-b811-44b1-8a4f-bef8030bf265',
-            members: [
-                '1c01d85f-b811-44b1-8a4f-bef8030bf265',
-                '0ac710ce-4530-4ea9-8f70-9d19383c95d4',
-            ],
-            group: true,
-        };
+    it('it should send a push notification to a user', async () => {
+        const senderId = '1c01d85f-b811-44b1-8a4f-bef8030bf265';
+        const convoId = 'b613b7c5-5f73-4331-8703-3a1176728a31';
 
-        const newConvoCreated = await startConvo(newConvo);
+        const owner = '99bc43ba-02ab-4394-b48b-49a39a95443c';
 
-        console.log('new convo create', newConvoCreated);
-        console.log('new convo create members', newConvoCreated.data.members);
-
-        expect(newConvoCreated).to.be.not.empty;
+        const sendMessage = await sendPushNotification(senderId, {
+            owner,
+            convoId,
+            message: 'some message',
+        });
+        expect(sendMessage).to.not.be.empty;
     });
+    // it('it should create an new convo and return it', async () => {
+    //     const newConvo: ChatConvoType = {
+    //         owner: '1c01d85f-b811-44b1-8a4f-bef8030bf265',
+    //         members: [
+    //             '1c01d85f-b811-44b1-8a4f-bef8030bf265',
+    //             '0ac710ce-4530-4ea9-8f70-9d19383c95d4',
+    //         ],
+    //         group: true,
+    //     };
 
-    // it("it should return chat convo with joins", async () => { 
+    //     const newConvoCreated = await startConvo(newConvo);
+
+    //     console.log('new convo create', newConvoCreated);
+    //     console.log('new convo create members', newConvoCreated.data.members);
+
+    //     expect(newConvoCreated).to.be.not.empty;
+    // });
+
+    // it("it should return chat convo with joins", async () => {
     //     const convo = await getChatConvoById("d2bb6ba6-1bc5-480a-a3ae-c28bec3708bf");
 
     //     console.log('convo with joins', convo);
