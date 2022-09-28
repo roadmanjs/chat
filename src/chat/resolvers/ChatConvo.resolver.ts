@@ -1,4 +1,4 @@
-import {Resolver, Mutation, Arg, Query, Subscription, Root, UseMiddleware} from 'type-graphql';
+import {Resolver, Mutation, Ctx, Arg, Query, Subscription, Root, UseMiddleware} from 'type-graphql';
 import {ChatConvo, ChatConvoType} from '../models/ChatConvo.model';
 import {
     chatConvo,
@@ -7,8 +7,9 @@ import {
     startConvo,
 } from '../methods/ChatConvoResolver.methods';
 import {isAuth} from '@roadmanjs/auth';
-import {ChatResType, getPagination} from '../../shared/ContextType';
+import {ChatResType, getPagination, ContextType} from '../../shared/ContextType';
 import {OnChatMessage} from '../models';
+import _get from 'lodash/get';
 
 const ConvoPagination = getPagination(ChatConvo);
 
@@ -30,9 +31,12 @@ export class ChatConvoResolver {
     @Query(() => ChatConvo)
     @UseMiddleware(isAuth)
     async chatConvoById(
+        @Ctx() ctx: ContextType,
         @Arg('id', () => String, {nullable: false}) id: string
     ): Promise<ChatConvo> {
-        return chatConvoById(id);
+        const owner = _get(ctx, 'payload.userId', ''); // loggedIn user
+
+        return chatConvoById(id, owner);
     }
 
     @Query(() => ConvoPagination)

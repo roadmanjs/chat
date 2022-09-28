@@ -110,24 +110,25 @@ export const createChatConvoType = async (
     return convos as ChatConvoType[];
 };
 
-export const getChatConvoById = async (id: string): Promise<ChatConvo | null> => {
+export const getChatConvoById = async (id: string, owner: string): Promise<ChatConvo | null> => {
     try {
         const bucket = connectionOptions.bucketName;
 
         const query = `
-    SELECT *
-    FROM \`${bucket}\` convo
-      JOIN \`${bucket}\` owner
-      ON KEYS convo.owner
-      NEST \`${bucket}\` members
-      ON KEYS convo.members
-      LEFT JOIN \`${bucket}\` lastMessage
-      ON KEYS convo.lastMessage
-        
-      WHERE convo._type = "${ChatConvoModelName}"
-      AND convo.id = "${id}"
-      LIMIT 1;
-    `;
+            SELECT *
+            FROM \`${bucket}\` convo
+            JOIN \`${bucket}\` owner
+            ON KEYS convo.owner
+            NEST \`${bucket}\` members
+            ON KEYS convo.members
+            LEFT JOIN \`${bucket}\` lastMessage
+            ON KEYS convo.lastMessage
+                
+            WHERE convo._type = "${ChatConvoModelName}"
+            AND convo.id = "${id}"
+            AND convo.owner = "${owner}"
+            LIMIT 1;
+            `;
 
         const [errorFetching, data = []] = await awaitTo(
             ChatConvoModel.customQuery<any>({

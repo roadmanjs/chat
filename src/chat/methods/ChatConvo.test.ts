@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'mocha';
 
 import {expect} from 'chai';
+import { getChatConvoById } from './ChatConvo.methods';
 import {sendMessageToUser} from '@roadmanjs/push';
 import {sendPushNotification} from '../../shared/pubsub.utils';
 import {startCouchbase} from '@roadmanjs/couchset';
@@ -11,19 +12,19 @@ before((done) => {
 });
 
 describe('ChatConvo', () => {
-    it('it should send a push notification to a user', async () => {
-        const senderId = '1c01d85f-b811-44b1-8a4f-bef8030bf265';
-        const convoId = 'b613b7c5-5f73-4331-8703-3a1176728a31';
+    // it('it should send a push notification to a user', async () => {
+    //     const senderId = '1c01d85f-b811-44b1-8a4f-bef8030bf265';
+    //     const convoId = 'b613b7c5-5f73-4331-8703-3a1176728a31';
 
-        const owner = '99bc43ba-02ab-4394-b48b-49a39a95443c';
+    //     const owner = '99bc43ba-02ab-4394-b48b-49a39a95443c';
 
-        const sendMessage = await sendPushNotification(senderId, {
-            owner,
-            convoId,
-            message: 'some message',
-        });
-        expect(sendMessage).to.not.be.empty;
-    });
+    //     const sendMessage = await sendPushNotification(senderId, {
+    //         owner,
+    //         convoId,
+    //         message: 'some message',
+    //     });
+    //     expect(sendMessage).to.not.be.empty;
+    // });
     // it('it should create an new convo and return it', async () => {
     //     const newConvo: ChatConvoType = {
     //         owner: '1c01d85f-b811-44b1-8a4f-bef8030bf265',
@@ -42,12 +43,12 @@ describe('ChatConvo', () => {
     //     expect(newConvoCreated).to.be.not.empty;
     // });
 
-    // it("it should return chat convo with joins", async () => {
-    //     const convo = await getChatConvoById("d2bb6ba6-1bc5-480a-a3ae-c28bec3708bf");
+    it("it should return chat convo with joins", async () => {
+        const convo = await getChatConvoById("d2bb6ba6-1bc5-480a-a3ae-c28bec3708bf", "1c01d85f-b811-44b1-8a4f-bef8030bf265");
 
-    //     console.log('convo with joins', convo);
-    //     expect(convo.members[0].id).to.be.not.empty;
-    // })
+        console.log('convo with joins', convo);
+        expect(convo.members[0].id).to.be.not.empty;
+    })
 
     // it("Create convo", async () => {
     //   const owner = "1c01d85f-b811-44b1-8a4f-bef8030bf265";

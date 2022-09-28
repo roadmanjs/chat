@@ -16,9 +16,9 @@ import {awaitTo} from '@stoqey/client-graphql';
 import {connectionOptions} from '@roadmanjs/couchset';
 import {log} from '@roadmanjs/logs';
 
-export const chatConvoById = async (id: string): Promise<ChatConvo | null> => {
+export const chatConvoById = async (id: string, owner: string): Promise<ChatConvo | null> => {
     try {
-        const chatConvo = await getChatConvoById(id);
+        const chatConvo = await getChatConvoById(id, owner);
 
         if (chatConvo) {
             return chatConvo;
@@ -216,7 +216,7 @@ export const startConvo = async (args: ChatConvoType): Promise<ChatResType> => {
             }
 
             const createdId = createdConvo && createdConvo.id;
-            const chatConvo = await getChatConvoById(createdId as any);
+            const chatConvo = await getChatConvoById(createdId as any, owner);
             if (chatConvo) {
                 return {success: true, data: chatConvo};
             }
