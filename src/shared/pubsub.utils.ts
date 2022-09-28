@@ -1,4 +1,8 @@
+import {UserModel, UserType} from '@roadmanjs/auth';
+
 import {ContextType} from './ContextType';
+import {log} from '@roadmanjs/logs';
+import {sendMessageToUser} from '@roadmanjs/push';
 
 /**
  * Publish any message to a topic
@@ -26,4 +30,41 @@ export const publishMessageToTopic = async (
         return true;
     }
     return false;
+};
+
+interface SendPushNotificationData extends Record<string, any> {
+    message: string;
+    owner: string;
+    convoId;
+}
+
+export const sendPushNotification = async (
+    senderId: string,
+    data: SendPushNotificationData
+): Promise<void> => {
+    try {
+        const {owner, message} = data;
+
+        const sender: UserType = await UserModel.findById(senderId);
+
+        if (sender) {
+            const imageUrl = sender.avatar; // todo default
+
+            const fullnames = sender.fullname || sender.firstname + ' ' + sender.lastname;
+
+            await sendMessageToUser(owner, {
+                data: {
+                    type: 'chat',
+                    ...data,
+                },
+                notification: {
+                    title: `Message from ${fullnames}`,
+                    body: message.substring(0, 50),
+                    imageUrl: imageUrl,
+                },
+            });
+        }
+    } catch (error) {
+        log('error sending push notification', error);
+    }
 };

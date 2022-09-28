@@ -421,6 +421,19 @@
     graphql-redis-subscriptions "^2.4.2"
     jsonwebtoken "^8.5.1"
 
+"@roadmanjs/auth@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.27.tgz#9e05fdcb6aea25ed7c9c9dfe19bcae4d16372785"
+  integrity sha512-CutS1JlVKC8xnpFbLnTTVk3bPj0RAxFLZE6eT8pzEgAwHlznk6Xo0XVopncO7lybn90kiJMruc+8fw8S9NRvKg==
+  dependencies:
+    "@roadmanjs/couchset" "^0.0.3"
+    "@roadmanjs/firebase-admin" "^0.0.16"
+    "@roadmanjs/logs" "^0.0.1"
+    "@roadmanjs/utils" "^0.0.4"
+    graphql-redis-subscriptions "^2.4.2"
+    jsonwebtoken "^8.5.1"
+    reflect-metadata "^0.1.13"
+
 "@roadmanjs/core@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@roadmanjs/core/-/core-0.0.3.tgz#c7f153efbf940e5fcb690f3689b2675be464a4df"
@@ -499,6 +512,23 @@
     lodash "^4.17.20"
     uuid "^8.3.2"
 
+"@roadmanjs/firebase-admin@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/firebase-admin/-/firebase-admin-0.0.17.tgz#8d0b29399cedec4503ecd3994c1e895ad8ee14a9"
+  integrity sha512-+jgJPuGPQifTjrsgeN5O4l81Qh+0sGzljADLhHLheRLj+aYc/nMI8xIEbtkIi1nlGvZPwKQgkqQjrM79nPq/5A==
+  dependencies:
+    "@roadmanjs/core" "^0.0.3"
+    "@roadmanjs/couchset" "^0.0.6"
+    "@roadmanjs/logs" "^0.0.1"
+    "@roadmanjs/utils" "^0.0.4"
+    chalk "^4.1.0"
+    debug "^4.3.1"
+    dotenv "^8.2.0"
+    firebase-admin "^10.0.0"
+    graphql-upload "^13.0.0"
+    lodash "^4.17.20"
+    uuid "^8.3.2"
+
 "@roadmanjs/logs@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@roadmanjs/logs/-/logs-0.0.1.tgz#6f612b23c15e359207a2a8c8eff7776301697403"
@@ -509,6 +539,17 @@
     debug "^4.3.1"
     dotenv "^8.2.0"
     lodash "^4.17.20"
+
+"@roadmanjs/push@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@roadmanjs/push/-/push-0.0.1.tgz#705c92b760d1803f09012a93a1738544bb0fceab"
+  integrity sha512-kebCW+aadc+LI6u54Ty5NsoRjmLCLiy1105lwJYP9VmeQj4owH3W1fJ0CXEXwQp5ibC2+FtoEKuASuRU7N7Yig==
+  dependencies:
+    "@roadmanjs/auth" "^0.0.27"
+    "@roadmanjs/couchset" "^0.0.3"
+    "@roadmanjs/firebase-admin" "^0.0.17"
+    "@roadmanjs/logs" "^0.0.1"
+    "@roadmanjs/utils" "^0.0.4"
 
 "@roadmanjs/utils@^0.0.4":
   version "0.0.4"

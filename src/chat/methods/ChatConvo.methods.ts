@@ -261,6 +261,8 @@ export const updateConvoSubscriptions = async (
                 return;
             }
 
+            // push notification here
+
             // update sockets, no need for results
             await awaitTo(
                 Promise.all(
