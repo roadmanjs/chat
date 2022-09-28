@@ -409,18 +409,6 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@roadmanjs/auth@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.25.tgz#0871d74a11d34cc13fd25c207118585fad602eed"
-  integrity sha512-9/mhLdso6kN159gjhzL+FzwV2LkaXdDHVbovaqDBJDp58b3cCRzyo8dW4r3g5ZX8W3ofIUgPDXkwuDEYY2EXMg==
-  dependencies:
-    "@roadmanjs/couchset" "^0.0.3"
-    "@roadmanjs/firebase-admin" "^0.0.16"
-    "@roadmanjs/logs" "^0.0.1"
-    "@roadmanjs/utils" "^0.0.4"
-    graphql-redis-subscriptions "^2.4.2"
-    jsonwebtoken "^8.5.1"
-
 "@roadmanjs/auth@^0.0.27":
   version "0.0.27"
   resolved "https://registry.yarnpkg.com/@roadmanjs/auth/-/auth-0.0.27.tgz#9e05fdcb6aea25ed7c9c9dfe19bcae4d16372785"
