@@ -4,7 +4,7 @@ import 'dotenv/config';
 import {ChatConvoResolver, ChatMessageResolver} from './chat/resolvers';
 import {RoadMan, RoadmanBuild} from '@roadmanjs/core';
 
-import {configureFirebase} from '@roadmanjs/firebase-admin';
+// import {configureFirebase} from '@roadmanjs/firebase-admin';
 import ChatConvoPublicResolver from './chat/resolvers/ChatConvo.public.resolver';
 
 /**
@@ -12,7 +12,7 @@ import ChatConvoPublicResolver from './chat/resolvers/ChatConvo.public.resolver'
  * @param RoadmanBuild
  */
 export const chatRoadman: RoadMan = async (args: RoadmanBuild): Promise<RoadmanBuild> => {
-    await configureFirebase();
+    // await configureFirebase();
     return args;
 };
 

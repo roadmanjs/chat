@@ -2,7 +2,8 @@ import {UserModel, UserType} from '@roadmanjs/auth';
 
 import {ContextType} from './ContextType';
 import {log} from '@roadmanjs/logs';
-import {sendMessageToUser} from '@roadmanjs/push';
+
+// import {sendMessageToUser} from '@roadmanjs/push';
 
 /**
  * Publish any message to a topic
@@ -52,7 +53,8 @@ export const sendPushNotification = async (
 
             const fullnames = sender.fullname || sender.firstname + ' ' + sender.lastname;
 
-            const sentMessage = await sendMessageToUser(owner, {
+            const sentMessage = {
+                owner,
                 data: {
                     type: 'chat',
                     ...data,
@@ -62,7 +64,26 @@ export const sendPushNotification = async (
                     body: message.substring(0, 50),
                     imageUrl: imageUrl,
                 },
-            });
+            };
+            // TODO send push notification, use events to avoid direct import / dependency
+            // import {sendMessageToUser} from '@roadmanjs/push';
+            /**
+             * 
+                const sentMessage = await sendMessageToUser(owner, {
+                    data: {
+                        type: 'chat',
+                        ...data,
+                    },
+                    notification: {
+                        title: `Message from ${fullnames}`,
+                        body: message.substring(0, 50),
+                        imageUrl: imageUrl,
+                    },
+                });
+
+                return sentMessage;
+             
+             */
 
             return sentMessage;
         }

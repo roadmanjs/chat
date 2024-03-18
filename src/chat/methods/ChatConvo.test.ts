@@ -3,8 +3,6 @@ import 'mocha';
 
 import {expect} from 'chai';
 import { getChatConvoById } from './ChatConvo.methods';
-import {sendMessageToUser} from '@roadmanjs/push';
-import {sendPushNotification} from '../../shared/pubsub.utils';
 import {startCouchbase} from '@roadmanjs/couchset';
 
 before((done) => {
