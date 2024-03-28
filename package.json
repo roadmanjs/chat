@@ -1,10 +1,11 @@
 {
     "name": "@roadmanjs/chat",
-    "version": "0.0.63",
+    "version": "0.0.64",
     "description": " A roadman for chat and groups, using UserType from 'auth'",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
+        "src/",
         "docs/",
         "dist/",
         "register/",
@@ -25,7 +26,8 @@
         "test": "mocha src/*test.ts --exit",
         "convo": "mocha src/chat/methods/ChatConvo.test.ts --exit",
         "test-convo": "mocha src/chat/methods/*test.ts --exit",
-        "eslint": "eslint ./src --fix --ext=ts"
+        "eslint": "eslint ./src --fix --ext=ts",
+        "pub": "yarn publish 'dist-client/' --access=public && yarn publish --access=public"
     },
     "lint-staged": {
         "*.{ts,tsx}": [

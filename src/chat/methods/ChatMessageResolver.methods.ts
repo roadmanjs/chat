@@ -116,8 +116,8 @@ export const chatMessage = async (
         const query = `
             SELECT *
                 FROM \`${bucket}\` chat
-                LET owner = (SELECT o.* FROM \`${bucket}\` AS o USE KEYS chat.owner),
-                        attachments = (SELECT m.* FROM \`${bucket}\` AS m USE KEYS chat.attachments)
+                LEFT JOIN \`${bucket}\` owner ON KEYS chat.owner
+                LEFT JOIN \`${bucket}\` attachments ON KEYS chat.attachments
                 WHERE chat._type = "${ChatMessageModelName}"
                 AND chat.convoId = "${convoId}"
                 AND chat.createdAt ${sign} "${time.toISOString()}"
