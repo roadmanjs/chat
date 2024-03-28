@@ -150,7 +150,7 @@ export const chatMessage = async (
             return ChatMessageModel.parse({
                 ...chat,
                 attachments,
-                owner: owner[0] || null,
+                owner,
             });
         });
 
