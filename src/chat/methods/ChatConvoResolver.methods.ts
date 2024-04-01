@@ -190,7 +190,7 @@ export const startConvo = async (args: ChatConvoType): Promise<ChatResType> => {
             LEFT JOIN \`${bucket}\` source
             ON KEYS convo.sourceId
 
-            WHERE convo.group = true
+            WHERE convo.\`group\` = true
             AND convo.sourceType = "${sourceType}"
             AND convo.sourceId = "${sourceId}"
             AND convo.owner = "${owner}"
