@@ -7,6 +7,9 @@ export const ChatConvoFragment = gql`
         id
         convoId
         name
+        source
+        sourceId
+        sourceType
         avatar
         owner {
             ...ChatUserTypeFragment
