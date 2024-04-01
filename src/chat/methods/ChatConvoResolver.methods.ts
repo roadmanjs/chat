@@ -75,6 +75,8 @@ export const chatConvo = async (
             ON KEYS convo.members
             LEFT JOIN \`${bucket}\` lastMessage
             ON KEYS convo.lastMessage
+            LEFT JOIN \`${bucket}\` source
+            ON KEYS convo.sourceId
             
             WHERE convo._type = "${ChatConvoModelName}"
             AND convo.owner = "${owner}"
@@ -105,9 +107,11 @@ export const chatConvo = async (
 
         const dataToSend = rows.map((d) => {
             const {convo, lastMessage = {}, members, owner} = d;
+            const source = d.source || {};
             const lastMessageParsed = ChatMessageModel.parse(lastMessage);
             const chatConvoItem = ChatConvoModel.parse({
                 ...convo,
+                source,
                 members,
                 owner,
             });
@@ -157,13 +161,44 @@ export const createChatConvo = async (args: ChatConvoType): Promise<ChatResType>
 export const startConvo = async (args: ChatConvoType): Promise<ChatResType> => {
     try {
         // If updating
-        const {members = [], owner} = args;
+        const {members = [], owner, group} = args;
 
         const limit = 1;
 
         const bucket = connectionOptions.bucketName;
 
-        const queryExisting = `
+        /**
+         * {group=true, sourceType, sourceId}
+         * {group=true}
+         *
+         * {group=false}
+         */
+
+        let queryExisting = '';
+        if (group) {
+            // group
+            const {sourceType, sourceId} = args;
+
+            queryExisting = `
+            SELECT * FROM \`${bucket}\` convo
+            JOIN \`${bucket}\` owner
+            ON KEYS convo.owner
+            NEST \`${bucket}\` members
+            ON KEYS convo.members
+            LEFT JOIN \`${bucket}\` lastMessage
+            ON KEYS convo.lastMessage
+            LEFT JOIN \`${bucket}\` source
+            ON KEYS convo.sourceId
+
+            WHERE convo.group = true
+            AND convo.sourceType = "${sourceType}"
+            AND convo.sourceId = "${sourceId}"
+            AND convo.owner = "${owner}"
+            LIMIT 1;
+        `;
+        } else {
+            // no group, only 2 members
+            queryExisting = `
             SELECT * FROM \`${bucket}\` convo
 
             JOIN \`${bucket}\` owner
@@ -178,6 +213,7 @@ export const startConvo = async (args: ChatConvoType): Promise<ChatResType> => {
             AND convo.owner = "${owner}"
             LIMIT 1;
         `;
+        }
 
         const [errorGettingExisting, existingConvos = []] = await awaitTo(
             ChatConvoModel.customQuery({
@@ -199,11 +235,13 @@ export const startConvo = async (args: ChatConvoType): Promise<ChatResType> => {
         if (!isEmpty(convos)) {
             const dataToSend = convos.map((d: any) => {
                 const {convo, lastMessage, members, owner} = d;
+                const source = d.source || {};
                 return ChatConvoModel.parse({
                     ...convo,
                     members,
                     lastMessage,
                     owner,
+                    source,
                 });
             });
 

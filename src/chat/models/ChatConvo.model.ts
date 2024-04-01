@@ -2,6 +2,7 @@ import {Field, InputType, Model, ObjectType} from 'couchset';
 
 import {ChatMessageType} from './ChatMessage.model';
 import {ChatUserType} from './ChatUser.model';
+import GraphQLJSON from 'graphql-type-json';
 
 export const ChatConvoModelName = 'ChatConvo';
 
@@ -20,6 +21,12 @@ export class ChatConvoType {
 
     @Field(() => String, {nullable: true})
     name?: string;
+
+    @Field(() => String, {nullable: true})
+    sourceType?: string;
+
+    @Field(() => String, {nullable: true})
+    sourceId?: string;
 
     @Field(() => String, {nullable: true})
     avatar?: string;
@@ -61,6 +68,16 @@ export class ChatConvo {
     @Field(() => String, {nullable: true})
     name?: string;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Field((type) => GraphQLJSON, {nullable: true})
+    source?: any;
+
+    @Field(() => String, {nullable: true})
+    sourceType?: string;
+
+    @Field(() => String, {nullable: true})
+    sourceId?: string;
+
     @Field(() => String, {nullable: true})
     avatar?: string;
 
@@ -92,6 +109,8 @@ export class ChatConvo {
 export const chatConvoSelectors = [
     'id',
     'name',
+    'sourceType',
+    'sourceId',
     'avatar',
     'convoId',
     'owner',

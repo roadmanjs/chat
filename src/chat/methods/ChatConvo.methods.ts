@@ -123,6 +123,8 @@ export const getChatConvoById = async (id: string, owner: string): Promise<ChatC
             ON KEYS convo.members
             LEFT JOIN \`${bucket}\` lastMessage
             ON KEYS convo.lastMessage
+            LEFT JOIN \`${bucket}\` source
+            ON KEYS convo.sourceId
                 
             WHERE convo._type = "${ChatConvoModelName}"
             AND (convo.id = "${id}" OR convo.convoId = "${id}")
@@ -146,9 +148,11 @@ export const getChatConvoById = async (id: string, owner: string): Promise<ChatC
 
         const dataToSend = rows.map((d) => {
             const {convo, lastMessage = {}, members, owner} = d;
+            const source = d.source || {};
             const lastMessageParsed = ChatMessageModel.parse(lastMessage);
             const chatConvoItem = ChatConvoModel.parse({
                 ...convo,
+                source,
                 members,
                 owner,
             });
